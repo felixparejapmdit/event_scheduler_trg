@@ -1,0 +1,88 @@
+/* Style the tab */
+.tab {
+    float: left;
+    border: 1px solid #12372A;
+    background-color: #fffefe;
+    width: 20%;
+    height: 300px;
+  }
+  
+  /* Style the buttons that are used to open the tab content */
+  .tab button {
+    display: block;
+    background-color: inherit;
+    color: black;
+    padding: 35px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+  }
+  
+  /* Change background color of buttons on hover */
+  .tab button:hover {
+    background-color: #8fd19e;
+  }
+  
+  /* Create an active/current "tab button" class */
+  .tab button.active {
+    background-color: #6fb57f;
+  }
+  
+ /* Style the tab content */
+ .tabcontent {
+  padding: 12px;
+  border: 1px solid #50727B;
+  width: 100%;
+  overflow-y: auto; /* Add vertical scroll */
+  max-height: 664px; /* Limit maximum height */
+  display: none;
+}
+
+/* Style the tables inside the tab content */
+.tabcontent table {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Style the table headers */
+.tabcontent th {
+  text-align: center;
+  
+}
+
+/* Adjust input group styles */
+.input-group {
+  margin-bottom: 10px;
+}
+
+/* Adjust label styles */
+.input-group label {
+  margin-right: 10px;
+}
+
+/* Adjust button styles */
+.mt-2 {
+  margin-top: 10px;
+}
+
+  .calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border: 1px solid #ccc;
+}
+.calendar-header {
+    background-color: #f0f0f0;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.calendar-day {
+    padding: 10px;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+.today {
+    background-color: #ffffcc;
+}

@@ -1,0 +1,30 @@
+.notification-banner {
+    position: fixed;
+    bottom: 20px;
+    right: 20px; /* Adjust this value for desired right-side positioning */
+    width: 300px;
+    background-color: #007bff; /* Blue color for notification banner */
+    color: #fff!important; /* Text color */
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: none; /* Initially hide the notification banner */
+    z-index: 9999; /* Ensure the notification banner appears above other content */
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.notification-icon {
+    margin-right: 10px;
+}
+
+.notification-message {
+    flex-grow: 1; /* Allow the message to grow and fill available space */
+}
+
+.notification-close {
+    cursor: pointer; /* Change cursor to pointer when hovering over close icon */
+}
