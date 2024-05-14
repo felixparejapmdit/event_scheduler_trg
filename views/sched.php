@@ -101,7 +101,7 @@ function outputTableHeader($eventName) {
 
 function IconForEvent($eventId)
 {
-    //echo $eventId;
+   // echo $eventId;
     
     if ($_SESSION['role'] != 3)
     {
@@ -259,7 +259,7 @@ function VenueColorCoding1($venue)
         }
         .logout-btn {
             position: fixed;
-            top: 12px;
+            top: 32px;
             right: 20px;
             z-index: 1000;
             cursor: pointer;
@@ -290,7 +290,9 @@ function VenueColorCoding1($venue)
 
 <body>
 <!-- Logout Button -->
-<a href="#" data-toggle="modal" data-target="#confirmationModal" class="logout-btn btn btn-danger">Logout</a>
+<a href="#" data-toggle="modal" data-target="#confirmationModal" class="logout-btn btn btn-success">
+    <i class="fas fa-sign-out-alt"></i>
+</a>
 
 <!-- Confirmation modal -->
 <div class="modal fade" data-backdrop="static" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
@@ -434,13 +436,12 @@ document.addEventListener("DOMContentLoaded", function() {
                             <input type="hidden" id="current_url" name="current_url" value="sched.php">
                                 <div class="form-group"  style="display: <?php echo $displayStyle; ?>;">
                                     <label for="eventName">Category:</label>
-             
-
+            
                                     <?php
                                         // Assuming you have already established a connection to the database in $conn
 
                                         // Fetch event names from the events table
-                                        $eventNamesQuery = "SELECT DISTINCT name FROM category ORDER BY id ASC";
+                                        $eventNamesQuery = "SELECT DISTINCT id, name FROM category ORDER BY id ASC";
                                         $eventNamesResult = mysqli_query($conn, $eventNamesQuery);
 
                                         // The variable $eventName should be defined earlier in your script
@@ -448,13 +449,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
                                         echo "<select class='form-control' id='eventName' name='eventName' " . $isRequired . " style='width: 100%;'>";
                                         echo "<option value='0' disabled selected>Select category</option>";
-
                                         while ($eventNameRow = mysqli_fetch_assoc($eventNamesResult)) {
                                             $eventNamesql = $eventNameRow['name'];
+                                            $eventID = $eventNameRow['id'];
                                             // Output each event name as an option in the dropdown
-                                            echo "<option value='" . htmlspecialchars($eventNamesql, ENT_QUOTES, 'UTF-8') . "'" . ($eventNamesql == $eventName ? ' selected' : '') . ">" . htmlspecialchars($eventNamesql, ENT_QUOTES, 'UTF-8') . "</option>";
+                                            echo "<option value='" . htmlspecialchars($eventID, ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars($eventNamesql, ENT_QUOTES, 'UTF-8') . "</option>";
                                         }
-
+                                        
                                         echo "<option value='Others'>Others</option>";
                                         echo "</select>";
                                         ?>
@@ -475,59 +476,25 @@ document.addEventListener("DOMContentLoaded", function() {
                                     <input type="date" id="date" name="date" class="form-control" required>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" id="formtime">
                                     <label for="time">Time:</label>
                                     <input type="time" id="time" name="time" class="form-control" required>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" id="formselect">
                                 
                                     <style>
                                         /* Style for the select dropdown */
                                         select {
                                         padding: 5px;
                                         }
-
-                                        /* Style for the options */
-                                        select option.MPH {
-                                        color: #519eaa;
-                                        }
-
-                                        select option.chapel1 {
-                                        color: #d09e6a;
-                                        }
-
-                                        select option.chapel4 {
-                                        color: #248fb2;
-                                        }
-                                        select option.studioA {
-                                        color: #5c65bd;
-                                        }
-                                        select option.studioB {
-                                        color: #af479f;
-                                        }
-                                        select option.studioC {
-                                        color: #0083cd;
-                                        }
-                                        select option.ConferenceRoom6F {
-                                        color: #238fb6;
-                                        }
-                                        select option.CommonArea3F {
-                                        color: #5567a9;
-                                        }
-                                        select option.ConferenceRoom3F {
-                                        color: #5c64ae;
-                                        }
-                                        select option.LanguageRoom3F {
-                                        color: #b7be64;
-                                        }
-                                        select option.DojoRoom3F {
+                                        select option.trgroom {
                                         color: #c78171;
                                         }
-                                        select option.Auditorium {
+                                        select option.ecdoffice {
                                         color: #7a5aab;
                                         }
-                                        select option.PublicLobby {
+                                        select option.sfmoffice {
                                         color: #e0c750;
                                         }
                                         select option.Others {
@@ -536,20 +503,57 @@ document.addEventListener("DOMContentLoaded", function() {
                                         </style>
 
                                     <label for="venueSelect">Venue:</label>
-                                    <!-- Select dropdown with colored options -->
-                                    <select class="form-control" id="venueSelect" name="venueSelect" required onchange="toggleLocationInput1()">
-                                        <option value="0" disabled selected>Select a venue</option>
-                                        <option value="1">TRG Conference room</option>
-                                        <option value="2">ECD Office</option>
-                                        <option value="3">SFM - TRG Satellite Office</option>
-                                        <option value="Others" class="Others">Others</option>
-                                    </select>
+                   
+                                    <?php
+                        // Assuming you have already established a connection to the database in $conn
 
+                        // Fetch event names from the locations table
+                        $locationsQuery = "SELECT DISTINCT id, name FROM location ORDER BY id ASC";
+                        $locationsResult = mysqli_query($conn, $locationsQuery);
+                       
+                        // The variable $isRequired should be defined earlier in your script
+                        // It could be something like $isRequired = 'required' or $isRequired = '';
+
+                        echo "<select class='form-control' id='venueSelect' name='venueSelect' " . $isRequired . " onchange='toggleLocationInput1()'>";
+                        echo "<option value='0' disabled selected>Select category</option>";
+
+                        while ($eventNameRow = mysqli_fetch_assoc($locationsResult)) {
+                            $locationsql = $eventNameRow['name'];
+                            $eventID = $eventNameRow['id'];
+                            // Output each event name as an option in the dropdown
+                            echo "<option value='" . htmlspecialchars($eventID, ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars($locationsql, ENT_QUOTES, 'UTF-8') . "</option>";
+                        }
+
+                        echo "<option value='Others'>Others</option>";
+                        echo "</select>";
+                        ?>
                                     
                                     <!-- Input field for location -->
                                     <input type="text" id="location" name="location" class="form-control mt-2" placeholder="Enter venue" style="display: none;">
 
                                     <script>
+
+                                        document.getElementById('eventName').addEventListener('change', function() {
+                                            var selectedText = this.options[this.selectedIndex].text;
+                                            var timeGroup = document.getElementById('formtime');
+                                            var venueGroup = document.getElementById('formselect');
+                                            
+                                            var timeInput = document.getElementById('time');
+                                            var venueSelect = document.getElementById('venueSelect');
+
+                                            if (selectedText === 'Birthdays' || selectedText === 'Anniversary' || selectedText === 'Holidays') {
+                                                timeGroup.style.display = 'none';
+                                                venueGroup.style.display = 'none';
+                                                timeInput.removeAttribute('required');
+                                                venueSelect.removeAttribute('required');
+                                            } else {
+                                                timeGroup.style.display = 'block';
+                                                venueGroup.style.display = 'block';
+                                                timeInput.setAttribute('required', 'required');
+                                                venueSelect.setAttribute('required', 'required');
+                                            }
+                                        });
+
                                         function toggleLocationInput1() {
                                             var venueSelect = document.getElementById('venueSelect');
                                             var locationInput = document.getElementById('location');
@@ -721,15 +725,31 @@ document.addEventListener("DOMContentLoaded", function() {
                         }
                         </style>
 
-                    <label for="location">Venue:</label>
-                    <!-- Select dropdown with colored options -->
-                    <select class="form-control" id="editVenueSelect" name="editVenueSelect" required onchange="toggleLocationInput()">
-                    <option value="0" disabled selected>Select a venue</option>
-                    <option value="1">TRG Conference room</option>
-                    <option value="2">ECD Office</option>
-                    <option value="3">SFM - TRG Satellite Office</option>
-                    <option value="Others" class="Others">Others</option>
-                    </select>
+                    <label for="editVenueSelect">Venue:</label>
+            
+                    <?php
+                        // Assuming you have already established a connection to the database in $conn
+
+                        // Fetch event names from the locations table
+                        $locationsQuery = "SELECT DISTINCT id, name FROM location ORDER BY id ASC";
+                        $locationsResult = mysqli_query($conn, $locationsQuery);
+                        
+                        // The variable $isRequired should be defined earlier in your script
+                        // It could be something like $isRequired = 'required' or $isRequired = '';
+
+                        echo "<select class='form-control' id='editVenueSelect' name='editVenueSelect' " . $isRequired . " onchange='toggleLocationInput()'>";
+                        echo "<option value='0' disabled selected>Select location</option>";
+
+                        while ($eventNameRow = mysqli_fetch_assoc($locationsResult)) {
+                            $locationsql = $eventNameRow['name'];
+                            $eventID = $eventNameRow['id'];
+                            // Output each event name as an option in the dropdown
+                            echo "<option value='" . htmlspecialchars($eventID, ENT_QUOTES, 'UTF-8') . "'>" . htmlspecialchars($locationsql, ENT_QUOTES, 'UTF-8') . "</option>";
+                        }
+
+                        echo "<option value='Others'>Others</option>";
+                        echo "</select>";
+                    ?>
 
                     <!-- Input field for location -->
                     <input type="text" id="editLocation" name="editLocation" class="form-control mt-2" placeholder="Enter venue" style="display: none;">
@@ -1286,8 +1306,16 @@ document.addEventListener("DOMContentLoaded", function() {
         //echo '<tr>';
         echo '<tr data-event-time="' . $row['time'] . '" data-event-title="' . $title . '">';
         echo '<td style="font-size: 17px;padding: 1px;">';
-        echo '<b><span style="color: #231c35;margin-bottom: 0;">' . $time_12_hour . '</span></b><br>';
-        VenueColorCoding($location);
+
+        
+        // Check the event name value and conditionally display the time and location
+        if (!in_array($eventName, [1, 2, 5])) {
+            echo '<b><span style="color: #231c35;margin-bottom: 0;">' . $time_12_hour . '</span></b><br>';
+            VenueColorCoding($location);
+            } 
+
+
+
         // Use a regular expression to find the links in the details
         $pattern = '/(?:^|\s)(https?:\/\/(?:www\.)?(?:\S+\.)?\S{2,}(?:\S+)?(?:\.[a-z]{2,})?\S*)(?:$|\s)/i';
         $contact_number = preg_replace_callback($pattern, function($matches) {
@@ -1496,8 +1524,16 @@ $date = date("Y F j, l", strtotime("+1 day"));
         // Output the table body content
         echo '<tr>';
         echo '<td style="font-size: 17px;padding: 1px;"">';
+
+   
+
+        // Check the event name value and conditionally display the time and location
+        if (!in_array($eventName, [1, 2, 5])) {
         echo '<b><span style="color: #231c35;">' . $time_12_hour . '</span></b><br>';
         VenueColorCoding($location);
+        }
+            
+
          // Use a regular expression to find the links in the details
         $pattern = '/(?:^|\s)(https?:\/\/(?:www\.)?(?:\S+\.)?\S{2,}(?:\S+)?(?:\.[a-z]{2,})?\S*)(?:$|\s)/i';
         $contact_number = preg_replace_callback($pattern, function($matches) {
@@ -1772,18 +1808,20 @@ echo '</div>';
 
         // Check if the current URL contains 'userid'
         if (strpos($current_url, 'sectionid') !== false) {
-            $dateQuery = "SELECT * 
+            $dateQuery = "SELECT * , e.id as eventid
             FROM events e
             INNER JOIN user u ON u.id = e.prepared_by 
             WHERE e.event_type = 1 AND e.date = '$upcomingDate' AND  u.section = '$sectionid'
             ORDER BY e.date ASC, e.time ASC";
+            
            
         }else{
-            $dateQuery = "SELECT * 
+            $dateQuery = "SELECT *, e.id as eventid
             FROM events e
             INNER JOIN user u ON u.id = e.prepared_by 
             WHERE e.is_Display = 1 AND e.event_type = 1 AND e.date = '$upcomingDate'
             ORDER BY e.date ASC, e.time ASC";
+          
         }
              
             }
@@ -1800,7 +1838,7 @@ echo '</div>';
                 $time_12_hour = date("h:i A", strtotime($rowDate['time']));
                 $title = $rowDate['title'];
                 $location = $rowDate['location'];
-                $my_eventid = $rowDate['id'];
+                $my_eventid = $rowDate['eventid'];
                 $incharge = $rowDate['incharge'];
                 // Output the table body content
                 echo '<tr>';
