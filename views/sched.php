@@ -219,8 +219,8 @@ function VenueColorCoding1($venue)
     <link rel="icon" href="../images/scheduler.ico" type="image/x-icon">
 
 
-        <!-- Include jQuery before Bootstrap -->
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include jQuery before Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <!-- Include Bootstrap CSS (Bootstrap 4) -->
@@ -1157,21 +1157,21 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         #event_table td,
-#event_table th {
-    padding: 10px; /* Add padding to improve appearance */
-    border: 1px solid #ccc; /* Add border to td and th elements */
-    border-radius: 5px; /* Adjust the value to change the roundness */
-}
+            #event_table th {
+                padding: 10px; /* Add padding to improve appearance */
+                border: 1px solid #ccc; /* Add border to td and th elements */
+                border-radius: 5px; /* Adjust the value to change the roundness */
+            }
 
-#event_table thead {
-    border: none; /* Remove border from thead */
-}
+            #event_table thead {
+                border: none; /* Remove border from thead */
+            }
 
-.smaller-table-upcoming,
-.smaller-table-upcoming th,
-.smaller-table-upcoming td {
-    width: 100%;
-}
+            .smaller-table-upcoming,
+            .smaller-table-upcoming th,
+            .smaller-table-upcoming td {
+                width: 100%;
+            }
 
 
         .custom-border {
