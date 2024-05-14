@@ -76,7 +76,6 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {
     </style>
 </head>
 <body>
-<?php include '../layouts/sidemenu_bar.php'; ?>
 <?php include '../layouts/footer.php'; ?>
 <input type="hidden" id="savetype" name="savetype" value="daily">
 <input type="hidden" id="userid" name="userid" value="<?php echo $userid; ?>">
@@ -97,15 +96,29 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {
                 <input type="hidden" id="current_url" name="current_url" value="settings.php">
                     <div class="form-group"  style="display: <?php echo $displayStyle; ?>;">
                         <label for="eventName">Category:</label>
-                        <select id="eventName" name="eventName" class="form-control" <?php echo $isRequired; ?>>
-                        <option value="0" disabled selected>Select category</option>
-                                        <option value="1">Birthdays & Anniversary</option>
-                                        <option value="2">Weekly Reminders  (Buwanang Pulong, TRG Activities, Holidays, VSWS)</option>
-                                        <option value="3">Weekly Meeting Schedule</option>
-                                        <option value="4">Weekly Visitation</option>
-                                        <option value="5">Suguan Reminders (WS Suguan ng mga Min/Mwa)</option>
-                                        <option value="Others">Others</option>
-                        </select>
+ 
+                        <?php
+                                        // Assuming you have already established a connection to the database in $conn
+
+                                        // Fetch event names from the events table
+                                        $eventNamesQuery = "SELECT DISTINCT name FROM category ORDER BY id ASC";
+                                        $eventNamesResult = mysqli_query($conn, $eventNamesQuery);
+
+                                        // The variable $eventName should be defined earlier in your script
+                                        // It could be the currently selected event name for comparison
+
+                                        echo "<select class='form-control' id='eventName' name='eventName' " . $isRequired . ">";
+                                        echo "<option value='0' disabled selected>Select category</option>";
+
+                                        while ($eventNameRow = mysqli_fetch_assoc($eventNamesResult)) {
+                                            $eventNamesql = $eventNameRow['name'];
+                                            // Output each event name as an option in the dropdown
+                                            echo "<option value='" . htmlspecialchars($eventNamesql, ENT_QUOTES, 'UTF-8') . "'" . ($eventNamesql == $eventName ? ' selected' : '') . ">" . htmlspecialchars($eventNamesql, ENT_QUOTES, 'UTF-8') . "</option>";
+                                        }
+
+                                        echo "<option value='Others'>Others</option>";
+                                        echo "</select>";
+                                        ?>
                     </div>
 
                     <div class="form-group">
@@ -136,48 +149,18 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {
                             padding: 5px;
                             }
 
-                            /* Style for the options */
-                            select option.Birthdays {
-                            color: #519eaa;
-                            }
+                          /* Style for the options */
+                          select option.trgroom {
+                          color: #519eaa;
+                          }
 
-                            select option.chapel1 {
-                            color: #d09e6a;
-                            }
+                          select option.ecdoffice {
+                          color: #d09e6a;
+                          }
 
-                            select option.chapel4 {
-                            color: #248fb2;
-                            }
-                            select option.studioA {
-                            color: #5c65bd;
-                            }
-                            select option.studioB {
-                            color: #af479f;
-                            }
-                            select option.studioC {
-                            color: #0083cd;
-                            }
-                            select option.ConferenceRoom6F {
-                            color: #238fb6;
-                            }
-                            select option.CommonArea3F {
-                            color: #5567a9;
-                            }
-                            select option.ConferenceRoom3F {
-                            color: #5c64ae;
-                            }
-                            select option.LanguageRoom3F {
-                            color: #b7be64;
-                            }
-                            select option.DojoRoom3F {
-                            color: #c78171;
-                            }
-                            select option.Auditorium {
-                            color: #7a5aab;
-                            }
-                            select option.PublicLobby {
-                            color: #e0c750;
-                            }
+                          select option.sfmoffice {
+                          color: #248fb2;
+                          }
                             select option.Others {
                             color: #6e9f8a;
                             }
@@ -186,13 +169,11 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {
                         <label for="location">Venue:</label>
                         <!-- Select dropdown with colored options -->
                         <select class="form-control" id="venueSelect" name="venueSelect" required onchange="toggleLocationInput1()">
-                            <option value="0" disabled selected>Select a category</option>
-                            <option value="1" class="Birthdays">Birthdays & Anniversary</option>
-                            <option value="2">Weekly Reminders  (Buwanang Pulong, TRG Activities, Holidays, VSWS)</option>
-                            <option value="3">Weekly Meeting Schedule</option>
-                            <option value="4">Weekly Visitation</option>
-                            <option value="5">Suguan Reminders (WS Suguan ng mga Min/Mwa)</option>
-                            <option value="Others">Others</option>
+                                        <option value="0" disabled selected>Select a venue</option>
+                                        <option value="1" class="trgroom">TRG Conference room</option>
+                                        <option value="2" class="ecdoffice">ECD Office</option>
+                                        <option value="3" class="sfmoffice">SFM - TRG Satellite Office</option>
+                                        <option value="Others" class="Others">Others</option>
                         </select>
 
                         
@@ -268,24 +249,30 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {
                     <input type="hidden" id="current_url" name="current_url" value="settings.php">
                     <div class="form-group"  style="display: <?php echo $displayStyle; ?>;">
                         <label for="editEventName">Category</label>
-                        <!-- <select id="editEventName" name="editEventName" class="form-control" required>
-                            <option value="" disabled>Select an event</option>
-                            <option value="Worship Service">Worship Service</option>
-                            <option value="Meeting">Meeting</option>
-                            <option value="Seminar">Seminar</option>
-                            <option value="Devotional Prayer">Devotional Prayer</option>
-                            <option value="Choir Practice">Choir Practice</option>
-                            <option value="Others">Others</option>
-                        </select> -->
-                        <select id="editEventName" name="editEventName" class="form-control" <?php echo $isRequired; ?>>
-                            <option value="" disabled selected>Select category</option>
-                            <option value="1" class="Birthdays">Birthdays & Anniversary</option>
-                            <option value="2">Weekly Reminders  (Buwanang Pulong, TRG Activities, Holidays, VSWS)</option>
-                            <option value="3">Weekly Meeting Schedule</option>
-                            <option value="4">Weekly Visitation</option>
-                            <option value="5">Suguan Reminders (WS Suguan ng mga Min/Mwa)</option>
-                            <option value="Others">Others</option>
-                        </select>
+             
+                        <?php
+                            // Ensure $eventName is set and provide a default value if not
+                            $eventName = isset($eventName) ? $eventName : '';
+                            // Fetch event names from the events table
+                            $edit_eventNameQuery = "SELECT DISTINCT id, name FROM category ORDER BY id ASC";
+                            $edit_eventNamesResult = mysqli_query($conn, $edit_eventNameQuery);
+                                
+                            // The variable $eventName should be defined earlier in your script
+                            // It could be the currently selected event name for comparison
+
+                            echo "<select class='form-control' id='editEventName' name='editEventName' " . $isRequired . " style='width: 100%;'>";
+                            echo "<option value='0' disabled selected>Select category</option>";
+
+                            while ($eventNameRow = mysqli_fetch_assoc($edit_eventNamesResult)) {
+                                $eventNamesql = $eventNameRow['name'];
+                                $eventID = $eventNameRow['id'];
+                                // Output each event name as an option in the dropdown
+                                echo "<option value='" . htmlspecialchars($eventID, ENT_QUOTES, 'UTF-8') . "'" . ($eventNamesql == $eventName ? ' selected' : '') . ">" . htmlspecialchars($eventNamesql, ENT_QUOTES, 'UTF-8') . "</option>";
+                            }
+                            
+                            echo "<option value='Others'>Others</option>";
+                            echo "</select>";
+                        ?>
                     </div>
 
                     <div class="form-group">
@@ -318,47 +305,18 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {
                           }
 
                           /* Style for the options */
-                          select option.MPH {
+                          select option.trgroom {
                           color: #519eaa;
                           }
 
-                          select option.chapel1 {
+                          select option.ecdoffice {
                           color: #d09e6a;
                           }
 
-                          select option.chapel4 {
+                          select option.sfmoffice {
                           color: #248fb2;
                           }
-                          select option.studioA {
-                          color: #5c65bd;
-                          }
-                          select option.studioB {
-                          color: #af479f;
-                          }
-                          select option.studioC {
-                          color: #0083cd;
-                          }
-                          select option.ConferenceRoom6F {
-                          color: #238fb6;
-                          }
-                          select option.CommonArea3F {
-                          color: #5567a9;
-                          }
-                          select option.ConferenceRoom3F {
-                          color: #5c64ae;
-                          }
-                          select option.LanguageRoom3F {
-                          color: #b7be64;
-                          }
-                          select option.DojoRoom3F {
-                          color: #c78171;
-                          }
-                          select option.Auditorium {
-                          color: #7a5aab;
-                          }
-                          select option.PublicLobby {
-                          color: #e0c750;
-                          }
+                          
                           select option.Others {
                           color: #6e9f8a;
                           }
@@ -368,9 +326,9 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {
                       <!-- Select dropdown with colored options -->
                       <select class="form-control" id="editVenueSelect" name="editVenueSelect" required onchange="toggleLocationInput()">
                       <option value="0" disabled selected>Select a venue</option>
-                                        <option value="1">TRG Conference room</option>
-                                        <option value="2">ECD Office</option>
-                                        <option value="3">SFM - TRG Satellite Office</option>
+                                        <option value="trgroom" class="1">TRG Conference room</option>
+                                        <option value="ecdoffice" class="2">ECD Office</option>
+                                        <option value="sfmoffice" class="3">SFM - TRG Satellite Office</option>
                                         <option value="Others" class="Others">Others</option>
                       </select>
 
@@ -677,14 +635,16 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {
                             //echo "<td><select id='category_update' data-id='" . $eventId . "' class='form-control' name='categorySelect[]'>";
                             echo "<td><select class='category-update form-control' data-id='" . $eventId . "' name='categorySelect[]'>";
                             // Fetch event names from events table
-                            $eventNamesQuery = "SELECT DISTINCT name FROM category ORDER BY id ASC ";
+                            $eventNamesQuery = "SELECT DISTINCT id, name FROM category ORDER BY id ASC ";
                             $eventNamesResult = mysqli_query($conn, $eventNamesQuery);
                             echo "<option value='0' disabled selected>Select category</option>";
                             while ($eventNameRow = mysqli_fetch_assoc($eventNamesResult)) {
                                 $eventNamesql = $eventNameRow['name'];
                                 // Output each event name as an option in the dropdown
-                                echo "<option value='$eventNamesql' " . ($eventNamesql == $eventName ? 'selected' : '') . ">$eventNamesql</option>";
-                            }
+                                $eventID = $eventNameRow['id'];
+                                // Output each event name as an option in the dropdown
+                                echo "<option value='" . htmlspecialchars($eventID, ENT_QUOTES, 'UTF-8') . "'" . ($eventNamesql == $eventName ? ' selected' : '') . ">" . htmlspecialchars($eventNamesql, ENT_QUOTES, 'UTF-8') . "</option>";
+                           }
                             echo "</select></td>";
                         }
                         echo "<td>" . $title . "</td>";

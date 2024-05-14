@@ -619,27 +619,28 @@ document.addEventListener("DOMContentLoaded", function() {
                         <label for="editEventName">Category</label>
 
                         <?php
-                                        // Assuming you have already established a connection to the database in $conn
+                            // Ensure $eventName is set and provide a default value if not
+                            $eventName = isset($eventName) ? $eventName : '';
+                            // Fetch event names from the events table
+                            $edit_eventNameQuery = "SELECT DISTINCT id, name FROM category ORDER BY id ASC";
+                            $edit_eventNamesResult = mysqli_query($conn, $edit_eventNameQuery);
+                                
+                            // The variable $eventName should be defined earlier in your script
+                            // It could be the currently selected event name for comparison
 
-                                        // Fetch event names from the events table
-                                        $edit_eventNameQuery = "SELECT DISTINCT name FROM category ORDER BY id ASC";
-                                        $edit_eventNamesResult = mysqli_query($conn, $edit_eventNameQuery);
+                            echo "<select class='form-control' id='editEventName' name='editEventName' " . $isRequired . " style='width: 100%;'>";
+                            echo "<option value='0' disabled selected>Select category</option>";
 
-                                        // The variable $eventName should be defined earlier in your script
-                                        // It could be the currently selected event name for comparison
-
-                                        echo "<select class='form-control' id='editEventName' name='editEventName' " . $isRequired . " style='width: 100%;'>";
-                                        echo "<option value='0' disabled selected>Select category</option>";
-
-                                        while ($eventNameRow = mysqli_fetch_assoc($edit_eventNamesResult)) {
-                                            $eventNamesql = $eventNameRow['name'];
-                                            // Output each event name as an option in the dropdown
-                                            echo "<option value='" . htmlspecialchars($eventNamesql, ENT_QUOTES, 'UTF-8') . "'" . ($eventNamesql == $eventName ? ' selected' : '') . ">" . htmlspecialchars($eventNamesql, ENT_QUOTES, 'UTF-8') . "</option>";
-                                        }
-
-                                        echo "<option value='Others'>Others</option>";
-                                        echo "</select>";
-                                        ?>
+                            while ($eventNameRow = mysqli_fetch_assoc($edit_eventNamesResult)) {
+                                $eventNamesql = $eventNameRow['name'];
+                                $eventID = $eventNameRow['id'];
+                                // Output each event name as an option in the dropdown
+                                echo "<option value='" . htmlspecialchars($eventID, ENT_QUOTES, 'UTF-8') . "'" . ($eventNamesql == $eventName ? ' selected' : '') . ">" . htmlspecialchars($eventNamesql, ENT_QUOTES, 'UTF-8') . "</option>";
+                            }
+                            
+                            echo "<option value='Others'>Others</option>";
+                            echo "</select>";
+                        ?>
 
                     </div>
 
