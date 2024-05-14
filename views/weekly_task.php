@@ -25,7 +25,7 @@ if(isset($_SESSION['userid'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/tabs.css">
-    <title>My Schedule</title>
+    <title>Event Scheduler</title>
     <link rel="icon" href="../images/scheduler.ico" type="image/x-icon">
 
    <!-- Include jQuery before Bootstrap -->

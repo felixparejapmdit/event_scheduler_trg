@@ -207,9 +207,6 @@ function VenueColorCoding1($venue)
             break;
     }
 }
-// Example usage:
-// Call this function where you output the thead element in your while loop
-// outputTableHeader($eventName);
 ?>
 
 <!DOCTYPE html>
@@ -218,7 +215,7 @@ function VenueColorCoding1($venue)
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Event Tracker - PMD</title>
+    <title>Event Scheduler</title>
     <link rel="icon" href="../images/scheduler.ico" type="image/x-icon">
 
 
@@ -262,18 +259,16 @@ function VenueColorCoding1($venue)
         }
         .logout-btn {
             position: fixed;
-            top: 20px;
+            top: 12px;
             right: 20px;
             z-index: 1000;
             cursor: pointer;
-            font-size: 24px;
+            font-size: 16px;
             color: #000000;
         }
         .change-bg-btn.light {
             color: #fffffd; /* Color when background is dark */
         }
-
-       
 
         /* Reduce font size for smaller screens */
         @media (max-width: 768px) {
@@ -291,12 +286,33 @@ function VenueColorCoding1($venue)
 
     </style>
 
-
 </head>
 
-
-
 <body>
+<!-- Logout Button -->
+<a href="#" data-toggle="modal" data-target="#confirmationModal" class="logout-btn btn btn-danger">Logout</a>
+
+<!-- Confirmation modal -->
+<div class="modal fade" data-backdrop="static" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+  
+      <div class="modal-header">
+                <h5 class="modal-title" id="EventAddModalLabel">Log-out</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+      <div class="modal-body">
+        <p>Are you sure you want to log out?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="logout(event)">Yes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Notification Banner -->
 <div id="notificationBanner" class="notification-banner" style="display:none;">
@@ -314,43 +330,12 @@ function VenueColorCoding1($venue)
 </div>
 
 <!-- JavaScript -->
-<!-- <script>
-    // Function to update notification status
-    function updateNotification() {
-        // Event time from the database (replace with your event time)
-        var eventTime = new Date('<?php echo $eventTime; ?>');
-       
-        // Calculate notification time (one hour before event time)
-        var notificationTime = new Date(eventTime.getTime() - (60 * 60 * 1000)); // One hour before event time
-        //alert(notificationTime);
-        // Current time
-        //alert(notificationTime);
-        var currentTime = new Date();
-        // Check if it's time to show the notification
-        if (currentTime <= eventTime) {
-            // Show notification banner
-            document.getElementById('notificationBanner').style.display = 'block';
-        } else {
-            // Hide notification banner
-            document.getElementById('notificationBanner').style.display = 'none';
-        }
-    }
-
-    // Update notification status every minute
-    setInterval(updateNotification, 60000);
-
-    // Close notification banner
-    document.querySelector('.notification-close').addEventListener('click', function() {
-        document.getElementById('notificationBanner').style.display = 'none';
-    });
-
-    // Initial update
-    updateNotification();
-</script> -->
-
-
-<!-- JavaScript -->
 <script>
+        function logout() {
+    event.preventDefault(); // Prevent the default behavior of the button
+    // Redirect to logout page or perform logout operation here
+    window.location.href = "../";
+    }
     // Function to update notification status for each event
     function updateNotification() {
         // Get all table rows
@@ -430,14 +415,12 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 
-
-<?php include '../layouts/sidemenu_bar.php'; ?>
 <?php include '../layouts/footer.php'; ?>
 
 </style>
 <!-- Add Event Modal -->
 <div class="modal fade" data-backdrop="static" id="EventAddModal" tabindex="-1" aria-labelledby="EventAddModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" style="max-width: 800px;">
+                <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="EventAddModalLabel">Add New Event</h5>
@@ -451,15 +434,30 @@ document.addEventListener("DOMContentLoaded", function() {
                             <input type="hidden" id="current_url" name="current_url" value="sched.php">
                                 <div class="form-group"  style="display: <?php echo $displayStyle; ?>;">
                                     <label for="eventName">Category:</label>
-                        <select id="eventName" name="eventName" class="form-control" <?php echo $isRequired; ?> style="width: 100%;">
-                                        <option value="0" disabled selected>Select category</option>
-                                        <option value="1">Birthdays & Anniversary</option>
-                                        <option value="2">Weekly Reminders  (Buwanang Pulong, TRG Activities, Holidays, VSWS)</option>
-                                        <option value="3">Weekly Meeting Schedule</option>
-                                        <option value="4">Weekly Visitation</option>
-                                        <option value="5">Suguan Reminders (WS Suguan ng mga Min/Mwa)</option>
-                                        <option value="Others">Others</option>
-                                    </select>
+             
+
+                                    <?php
+                                        // Assuming you have already established a connection to the database in $conn
+
+                                        // Fetch event names from the events table
+                                        $eventNamesQuery = "SELECT DISTINCT name FROM category ORDER BY id ASC";
+                                        $eventNamesResult = mysqli_query($conn, $eventNamesQuery);
+
+                                        // The variable $eventName should be defined earlier in your script
+                                        // It could be the currently selected event name for comparison
+
+                                        echo "<select class='form-control' id='eventName' name='eventName' " . $isRequired . " style='width: 100%;'>";
+                                        echo "<option value='0' disabled selected>Select category</option>";
+
+                                        while ($eventNameRow = mysqli_fetch_assoc($eventNamesResult)) {
+                                            $eventNamesql = $eventNameRow['name'];
+                                            // Output each event name as an option in the dropdown
+                                            echo "<option value='" . htmlspecialchars($eventNamesql, ENT_QUOTES, 'UTF-8') . "'" . ($eventNamesql == $eventName ? ' selected' : '') . ">" . htmlspecialchars($eventNamesql, ENT_QUOTES, 'UTF-8') . "</option>";
+                                        }
+
+                                        echo "<option value='Others'>Others</option>";
+                                        echo "</select>";
+                                        ?>
                                 </div>
 
                                 <div class="form-group">
@@ -603,7 +601,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <!-- Edit Event Modal -->
 <div class="modal fade" data-backdrop="static" id="EventEditModal" tabindex="-1" aria-labelledby="EventEditModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" style="max-width: 800px;">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="EventEditModalLabel">Edit Event</h5>
@@ -620,15 +618,28 @@ document.addEventListener("DOMContentLoaded", function() {
                     <div class="form-group"  style="display: <?php echo $displayStyle; ?>;">
                         <label for="editEventName">Category</label>
 
-                        <select id="editEventName" name="editEventName" class="form-control" <?php echo $isRequired; ?> style="width: 100%;">
-                            <option value="0" disabled selected>Select category</option>
-                            <option value="1">Birthdays & Anniversary</option>
-                            <option value="2">Weekly Reminders  (Buwanang Pulong, TRG Activities, Holidays, VSWS)</option>
-                            <option value="3">Weekly Meeting Schedule</option>
-                            <option value="4">Weekly Visitation</option>
-                            <option value="5">Suguan Reminders (WS Suguan ng mga Min/Mwa)</option>
-                            <option value="Others">Others</option>
-                        </select>
+                        <?php
+                                        // Assuming you have already established a connection to the database in $conn
+
+                                        // Fetch event names from the events table
+                                        $edit_eventNameQuery = "SELECT DISTINCT name FROM category ORDER BY id ASC";
+                                        $edit_eventNamesResult = mysqli_query($conn, $edit_eventNameQuery);
+
+                                        // The variable $eventName should be defined earlier in your script
+                                        // It could be the currently selected event name for comparison
+
+                                        echo "<select class='form-control' id='editEventName' name='editEventName' " . $isRequired . " style='width: 100%;'>";
+                                        echo "<option value='0' disabled selected>Select category</option>";
+
+                                        while ($eventNameRow = mysqli_fetch_assoc($edit_eventNamesResult)) {
+                                            $eventNamesql = $eventNameRow['name'];
+                                            // Output each event name as an option in the dropdown
+                                            echo "<option value='" . htmlspecialchars($eventNamesql, ENT_QUOTES, 'UTF-8') . "'" . ($eventNamesql == $eventName ? ' selected' : '') . ">" . htmlspecialchars($eventNamesql, ENT_QUOTES, 'UTF-8') . "</option>";
+                                        }
+
+                                        echo "<option value='Others'>Others</option>";
+                                        echo "</select>";
+                                        ?>
 
                     </div>
 
@@ -792,7 +803,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         <a href="../views/sched.php" class="btn btn-link"  style="display:none;">
                             <i class="fas fa-arrow-left"></i> <!-- Font Awesome arrow-left icon -->
                         </a>
-                        <h4 class="mb-0 ml-2"  style="display:none;">PMD Events List</h4>
+                        <h4 class="mb-0 ml-2"  style="display:none;">TRG Events List</h4>
                     </div>
 
 
@@ -1618,7 +1629,7 @@ echo '</div>';
             $upcoming_event_count_pmd = getEventCount($conn, "DATE(e.date) > CURDATE() + INTERVAL 1 DAY AND e.event_type = 1 AND e.prepared_by NOT IN(14, 40) ");
          }
       
-        $eventlabel_pmd = "PMD";
+        $eventlabel_pmd = "TRG";
         $eventlabel_section = "Section";
     }
     else

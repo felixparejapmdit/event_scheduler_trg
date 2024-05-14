@@ -25,7 +25,7 @@ $photo = $_SESSION['photo'];  //Assuming the session contains the path to the us
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Tracker - User Profile</title>
+    <title>Event Scheduler</title>
     <link rel="icon" href="../images/scheduler.ico" type="image/x-icon">
     <!-- Bootstrap CSS -->
   

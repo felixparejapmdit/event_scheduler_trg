@@ -83,7 +83,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {
 
 <!-- Add Event Modal -->
 <div class="modal fade" data-backdrop="static" id="EventAddModal" tabindex="-1" aria-labelledby="EventAddModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="EventAddModalLabel">Add New Event</h5>
@@ -137,7 +137,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {
                             }
 
                             /* Style for the options */
-                            select option.MPH {
+                            select option.Birthdays {
                             color: #519eaa;
                             }
 
@@ -186,21 +186,13 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {
                         <label for="location">Venue:</label>
                         <!-- Select dropdown with colored options -->
                         <select class="form-control" id="venueSelect" name="venueSelect" required onchange="toggleLocationInput1()">
-                            <option value="0" disabled selected>Select a venue</option>
-                            <option value="MPH" class="MPH">MPH</option>
-                            <option value="Chapel 1" class="chapel1">Chapel 1</option>
-                            <option value="Chapel 4" class="chapel4">Chapel 4</option>
-                            <option value="Studio A" class="studioA">Studio A</option>
-                            <option value="Studio B" class="studioB">Studio B</option>
-                            <option value="Studio C" class="studioC">Studio C</option>
-                            <option value="6F ConferenceRoom" class="ConferenceRoom6F">6F Conference Room</option>
-                            <option value="3F CommonArea" class="CommonArea3F">3F Common Area</option>
-                            <option value="3F ConferenceRoom" class="ConferenceRoom3F">3F Conference Room</option>
-                            <option value="3F" LanguageRoom class="LanguageRoom3F">3F Language Room</option>
-                            <option value="3F Dojo Room" class="DojoRoom3F">3F Dojo Room</option>
-                            <option value="Auditorium" class="Auditorium">Auditorium</option>
-                            <option value="Public Lobby" class="PublicLobby">Public Lobby</option>
-                            <option value="Others" class="Others">Others</option>
+                            <option value="0" disabled selected>Select a category</option>
+                            <option value="1" class="Birthdays">Birthdays & Anniversary</option>
+                            <option value="2">Weekly Reminders  (Buwanang Pulong, TRG Activities, Holidays, VSWS)</option>
+                            <option value="3">Weekly Meeting Schedule</option>
+                            <option value="4">Weekly Visitation</option>
+                            <option value="5">Suguan Reminders (WS Suguan ng mga Min/Mwa)</option>
+                            <option value="Others">Others</option>
                         </select>
 
                         
@@ -261,7 +253,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {
 
 <!-- Edit Event Modal -->
 <div class="modal fade" data-backdrop="static" id="EventEditModal" tabindex="-1" aria-labelledby="EventEditModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="EventEditModalLabel">Edit Event</h5>
@@ -287,10 +279,11 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {
                         </select> -->
                         <select id="editEventName" name="editEventName" class="form-control" <?php echo $isRequired; ?>>
                             <option value="" disabled selected>Select category</option>
-                            <option value="Suguan">Suguan</option>
-                            <option value="ATG Appointment">ATG Appointment</option>
-                            <option value="Non-ATG">Non-ATG</option>
-                            <option value="Family">Family</option>
+                            <option value="1" class="Birthdays">Birthdays & Anniversary</option>
+                            <option value="2">Weekly Reminders  (Buwanang Pulong, TRG Activities, Holidays, VSWS)</option>
+                            <option value="3">Weekly Meeting Schedule</option>
+                            <option value="4">Weekly Visitation</option>
+                            <option value="5">Suguan Reminders (WS Suguan ng mga Min/Mwa)</option>
                             <option value="Others">Others</option>
                         </select>
                     </div>

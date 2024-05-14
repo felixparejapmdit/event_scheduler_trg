@@ -45,21 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['sectionid'] = $sectionid;
 
               // Clear localStorage
-    echo "<script>localStorage.clear();</script>";
-    echo $username;
-            if ($_SESSION['role'] === "1" || $_SESSION['role'] === "3" ) {
-                // Redirect to sched.php
-                header("Location: dashboard.php"); // Relative path to sched.php
-                exit(); // Ensure no further code execution after redirection
-            } elseif ($_SESSION['role'] === "2" ) {
-                // Redirect to weekly_task.php
-                header("Location: sched.php"); // Relative path to weekly_task.php
-                exit(); // Ensure no further code execution after redirection
-            } elseif ($_SESSION['role'] === "4") {
-                // Redirect to weekly_task.php
-                header("Location: sched.php"); // Relative path to weekly_task.php
-                exit(); // Ensure no further code execution after redirection
-            }
+            echo "<script>localStorage.clear();</script>";
+
+            header("Location: sched.php"); // Relative path to weekly_task.php
             
             
             exit(); // Terminate script execution after redirection
@@ -85,7 +73,7 @@ $conn->close();
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Event Tracker - Login</title>
+<title>Event Scheduler</title>
 <link rel="icon" href="./images/scheduler.ico" type="image/x-icon">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <style>

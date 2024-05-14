@@ -1,6 +1,6 @@
 <?php
 // Connect to the database
-$conn = mysqli_connect("localhost", "root", "", "event_scheduler");
+$conn = mysqli_connect("localhost", "root", "", "scheduler_trg");
 
 // Check connection
 if (!$conn) {
