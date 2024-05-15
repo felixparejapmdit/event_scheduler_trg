@@ -1469,7 +1469,7 @@ $date = date("Y F j, l", strtotime("+1 day"));
     // Counter to keep track of the number of tables created
     $counter = 0;
  // Output the "Tomorrow's Events" heading with row count
- echo '<h4 class="mb-1 ml-1 mt-3" style="font-weight:bold;">' . ($counter == 0 ? 'Tomorrow (' . $row_count . ') <br> ' . $date . '' : '<p style="color: rgba(0, 0, 0, 0);">Today</p>') . '</h4>';
+ echo '<h4 class="mb-1 ml-1 mt-3" style="font-weight:bold;">' . ($counter == 0 ? 'Reminders (' . $row_count . ') <br> ' . $date . '' : '<p style="color: rgba(0, 0, 0, 0);">Today</p>') . '</h4>';
  echo '<div class="row">';
     while ($row = mysqli_fetch_assoc($today_result)) {
         $eventid = $row['event_id'];
