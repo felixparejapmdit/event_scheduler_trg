@@ -27,7 +27,7 @@
 
 <!-- Fixed icons -->
 <?php if ($_SESSION['role'] != 3): ?>
-<div class="fixed-icons">
+    <div class="fixed-icons">
     <!-- Toggle icons button -->
     <!-- <button id="toggleIconsBtn"><i class="fas fa-chevron-left"></i></button> -->
     <!-- Events icon -->
@@ -42,6 +42,7 @@
         <i class="fas fa-sign-out-alt"></i>
     </a>
 </div>
+
 <?php endif; ?>
 
 
@@ -69,6 +70,26 @@
 
 <script>
 
+$(document).ready(function() {
+
+document.addEventListener('fullscreenchange', onFullScreenChange);
+document.addEventListener('mozfullscreenchange', onFullScreenChange);
+document.addEventListener('webkitfullscreenchange', onFullScreenChange);
+document.addEventListener('msfullscreenchange', onFullScreenChange);
+
+function onFullScreenChange() {
+    var fixedIcons = document.querySelector('.fixed-icons');
+    if (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+        // Fullscreen mode is active
+        fixedIcons.style.display = 'none'; // Hide the icons
+    } else {
+        // Fullscreen mode is inactive
+        fixedIcons.style.display = 'flex'; // Show the icons
+    }
+}
+
+});
+
 function logout() {
     event.preventDefault(); // Prevent the default behavior of the button
     // Redirect to logout page or perform logout operation here
@@ -82,6 +103,10 @@ function logout() {
     // Swap the order of eventsBtn and settingsBtn
     eventsBtn.style.order = settingsBtn.style.order;
     settingsBtn.style.order = eventsBtnPosition;
+
+
+
+    
 
  };
     // Script for toggling fixed icons
