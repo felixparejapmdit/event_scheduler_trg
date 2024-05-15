@@ -3,8 +3,8 @@
 <style>
     .fixed-icons {
         position: fixed;
-        bottom: 20px; /* Adjust the bottom position as needed */
-        right: 155px; /* Initially hide the icons off-screen */
+        bottom: 30px; /* Adjust the bottom position as needed */
+        right: -2px; /* Initially hide the icons off-screen */
         transition: left 0.3s ease; /* Add smooth transition effect */
         z-index: 1000; /* Ensure the icons appear above other content */
     }
@@ -12,7 +12,7 @@
     .fixed-icons a,
     .fixed-icons button {
         display: inline-block;
-        background-color: #0b190b; /* Example background color */
+        background-color: #41B06E; /* Example background color */
         color: #fff; /* Example text color */
         border: none;
         border-radius: 50%; /* Make the icons circular */
@@ -37,31 +37,43 @@
     <!-- Add icon (opens modal) -->
     <button data-toggle="modal" data-target="#EventAddModal"><i class="fas fa-plus"></i></button>
     
+    <!-- Logout Button -->
+    <a href="#" data-toggle="modal" data-target="#confirmationModal">
+        <i class="fas fa-sign-out-alt"></i>
+    </a>
 </div>
 <?php endif; ?>
 
-<!-- Script for toggling fixed icons -->
-<!-- <script>
-    // Toggle fixed icons on click
-    document.getElementById('toggleIconsBtn').addEventListener('click', function() {
-        var fixedIcons = document.querySelector('.fixed-icons');
-        var toggleIconsBtn = document.getElementById('toggleIconsBtn');
-        
-        if (fixedIcons.style.right === '-116px' || fixedIcons.style.right === '') {
-            
-            // Show fixed icons
-            fixedIcons.style.right = '-5px';
-            toggleIconsBtn.innerHTML = '<i class="fas fa-chevron-right"></i>'; // Change icon to right arrow
-        } else {
-            
-            // Hide fixed icons
-            fixedIcons.style.right = '-116px';
-            toggleIconsBtn.innerHTML = '<i class="fas fa-chevron-left"></i>'; // Change icon to left arrow
-        }
-    });
-</script> -->
+
+<!-- Confirmation modal -->
+<div class="modal fade" data-backdrop="static" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+  
+      <div class="modal-header">
+                <h5 class="modal-title" id="EventAddModalLabel">Log-out</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+      <div class="modal-body">
+        <p>Are you sure you want to log out?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="logout(event)">Yes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
+
+function logout() {
+    event.preventDefault(); // Prevent the default behavior of the button
+    // Redirect to logout page or perform logout operation here
+    window.location.href = "../";
+    }
  window.onload = function() {
     var eventsBtn = document.getElementById('eventsBtn');
     var settingsBtn = document.getElementById('settingsBtn');

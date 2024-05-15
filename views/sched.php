@@ -290,7 +290,7 @@ function VenueColorCoding1($venue)
 
 <body>
 <!-- Logout Button -->
-<a href="#" data-toggle="modal" data-target="#confirmationModal" class="logout-btn btn btn-success">
+<a href="#" data-toggle="modal" data-target="#confirmationModal" class="logout-btn btn btn-success" style="display:none;">
     <i class="fas fa-sign-out-alt"></i>
 </a>
 
@@ -1796,44 +1796,44 @@ echo '</div>';
 
             echo '<tbody>';
 
-            if ($_SESSION['role'] == 1 || $_SESSION['role'] == 3) {
-            
-            // Get the roleid from the URL
-            if (!isset($_GET['role'])) {
-                $roleid = 1;
+            if ($_SESSION['role'] == 1 || $_SESSION['role'] == 3) 
+            {
+                // Get the roleid from the URL
+                if (!isset($_GET['role'])) 
+                {
+                    $roleid = 1;
                 }
+                // Get the current URL
+                $current_url = $_SERVER['REQUEST_URI'];
 
-        // Get the current URL
-        $current_url = $_SERVER['REQUEST_URI'];
+                // Check if the current URL contains 'userid'
+                if (strpos($current_url, 'sectionid') !== false) {
+                    $dateQuery = "SELECT * , e.id as eventid
+                    FROM events e
+                    INNER JOIN user u ON u.id = e.prepared_by 
+                    WHERE e.event_type = 1 AND e.date = '$upcomingDate' AND  u.section = '$sectionid'
+                    ORDER BY e.date ASC, e.time ASC";
+                    
+                
+                }else{
+                    $dateQuery = "SELECT *, e.id as eventid
+                    FROM events e
+                    INNER JOIN user u ON u.id = e.prepared_by 
+                    WHERE e.is_Display = 1 AND e.event_type = 1 AND e.date = '$upcomingDate'
+                    ORDER BY e.date ASC, e.time ASC";
+                
+                }
+            }
+            else
+            {
+                $dateQuery = "SELECT * FROM events 
+                WHERE event_type = 1 AND date = '$upcomingDate' 
+                AND prepared_by = " . $_SESSION['userid'] . " ORDER BY date ASC, time ASC";
+            }
 
-        // Check if the current URL contains 'userid'
-        if (strpos($current_url, 'sectionid') !== false) {
-            $dateQuery = "SELECT * , e.id as eventid
-            FROM events e
-            INNER JOIN user u ON u.id = e.prepared_by 
-            WHERE e.event_type = 1 AND e.date = '$upcomingDate' AND  u.section = '$sectionid'
-            ORDER BY e.date ASC, e.time ASC";
-            
-           
-        }else{
-            $dateQuery = "SELECT *, e.id as eventid
-            FROM events e
-            INNER JOIN user u ON u.id = e.prepared_by 
-            WHERE e.is_Display = 1 AND e.event_type = 1 AND e.date = '$upcomingDate'
-            ORDER BY e.date ASC, e.time ASC";
-          
-        }
-             
-            }
-            else{
-            $dateQuery = "SELECT * FROM events 
-            WHERE event_type = 1 AND date = '$upcomingDate' 
-            AND prepared_by = " . $_SESSION['userid'] . " ORDER BY date ASC, time ASC";
-            }
-           
-           
             $date_result = mysqli_query($conn, $dateQuery);
-            while ($rowDate = mysqli_fetch_assoc($date_result)) {
+            while ($rowDate = mysqli_fetch_assoc($date_result)) 
+            {
                 // Convert time to 12-hour format
                 $time_12_hour = date("h:i A", strtotime($rowDate['time']));
                 $title = $rowDate['title'];
@@ -1847,8 +1847,6 @@ echo '</div>';
                 echo '<span style="color: #231c35!important;font-weight:bold;">' . $time_12_hour . ' - </span><b><a style="color: #118ab2;">' . $title . '</a></b>, ' . VenueColorCoding1($location) .', ' . $incharge;
                 echo '</td>';
                 echo '</tr>';
-
-
             }
             echo '</tbody>';
         echo '</table>';
