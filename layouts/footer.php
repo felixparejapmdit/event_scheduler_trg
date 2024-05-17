@@ -26,7 +26,7 @@
 </style>
 
 <!-- Fixed icons -->
-<?php if ($_SESSION['role'] != 3): ?>
+<?php if ($_SESSION['role'] != 3){ ?>
     <div class="fixed-icons">
     <!-- Toggle icons button -->
     <!-- <button id="toggleIconsBtn"><i class="fas fa-chevron-left"></i></button> -->
@@ -43,7 +43,7 @@
     </a>
 </div>
 
-<?php endif; ?>
+<?php } ?>
 
 
 <!-- Confirmation modal -->
