@@ -1414,18 +1414,16 @@ echo '</div>';
         die("Connection failed: " . mysqli_connect_error());
     }
 
-// Calculate tomorrow's date
-$tomorrow = date("Y-m-d", strtotime("+1 day"));
-
+    // Calculate tomorrow's date
+    $tomorrow = date("Y-m-d", strtotime("+1 day"));
     // Fetch today's events
 
     if($_SESSION['role'] == 1 || $_SESSION['role'] == 3)
     {
         //$today_query = "SELECT * FROM events WHERE is_display = 1 AND event_type = 1 AND date = '$tomorrow' AND events.prepared_by NOT IN(1, 14, 40) ORDER BY time ASC";
-
-
-          // Get the roleid from the URL
-    if (!isset($_GET['role'])) {
+        // Get the roleid from the URL
+    if (!isset($_GET['role'])) 
+    {
         $roleid = 1;
     }
    // Get the current URL
@@ -1448,11 +1446,6 @@ $tomorrow = date("Y-m-d", strtotime("+1 day"));
     WHERE is_display = 1 AND event_type = 1 AND date = '$tomorrow' AND e.prepared_by NOT IN(14, 40)  
     ORDER BY time ASC";
    }
-
-
-
-   
-
     }
     else{
         $today_query = "SELECT *,e.id as event_id  FROM events e WHERE e.event_type = 1 AND e.date = '$tomorrow' AND e.prepared_by = " . $_SESSION['userid'] . " ORDER BY e.time ASC";
