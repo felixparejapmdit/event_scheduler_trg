@@ -18,26 +18,27 @@ if (!$conn) {
 
 // Get form data
 
-if ($_POST['savetype'] === "weekly") {
-    $eventName = "weekly";
-    $title = $_POST['addDetails'];
+if ($_POST['savetype'] === "suguanevent") {
+    if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {
+        $eventName = isset($_POST['eventName']) ? $_POST['eventName'] : 'Others';
+        $isDisplay = 1;
+    } else {
+        $eventName = 'Others';
+        $isDisplay = 0;
+    }
 
-    $incharge = $_SESSION['username'];
-    $contact_number = "";
-    $host = "";
-    $date = $_POST['date_tosave'];
-    $time = $_POST['addTime'];
-
-    // $location  = $_POST['addVenue'];
-    $location = ($_POST['venueSelect'] === 'Others') ? $_POST['addVenue'] : $_POST['venueSelect'];
-
-    $week_number = $_POST['week_number'];
-    $details = "";
-    $preparedby = $_POST['userid'];
+    $title = $_POST['title'];
+    $incharge = $_POST['incharge'];
+    $contact_number = $_POST['contact_number'];
+    $host = $_POST['host'];
+    $date = $_POST['date'];
+    $time = $_POST['time'];
+    $location = ($_POST['venueSelect'] === 'Others') ? $_POST['location'] : $_POST['venueSelect'];
+    $week_number = 0;
+    $details = $_POST['addDetails'];
+    $preparedby = $_SESSION['userid'];
 
     $event_type = 2;
-
-    $isDisplay = 0;
 } else {
     if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {
         $eventName = isset($_POST['eventName']) ? $_POST['eventName'] : 'Others';
@@ -57,7 +58,9 @@ if ($_POST['savetype'] === "weekly") {
     $week_number = 0;
     $details = $_POST['addDetails'];
     $preparedby = $_SESSION['userid'];
+
     $event_type = 1;
+
 }
 
 // Prepare the SQL statement
@@ -69,20 +72,20 @@ $stmt = mysqli_prepare($conn, $sql);
 // Bind parameters
 mysqli_stmt_bind_param($stmt, "ssssssssssiss", $eventName, $title, $incharge, $contact_number, $host, $date, $time, $location, $week_number, $preparedby, $event_type, $details, $isDisplay);
 
+
 // Execute the statement
 if (mysqli_stmt_execute($stmt)) {
-    // Redirect to appropriate page
-    if ($_POST['savetype'] === "weekly") {
-        // Handle redirection for weekly type
-        $currentURL = $_POST['current_url'];
-        if (strpos($currentURL, 'sectionhead.php') !== false) {
-            header("Location: ../../views/sectionhead.php");
-        } elseif (strpos($currentURL, 'weekly_task.php') !== false) {
-            header("Location: ../../views/weekly_task.php");
+    // Determine the current URL
+    $currentURL = $_POST['current_url'];
+
+    // Redirect to appropriate page based on savetype
+    if ($_POST['savetype'] === "suguanevent") {
+        if (strpos($currentURL, 'suguan.php') !== false) {
+            header("Location: ../../views/suguan.php");
+        } elseif (strpos($currentURL, 'settings.php') !== false) {
+            header("Location: ../../views/settings.php");
         }
     } elseif ($_POST['savetype'] === "pmdevent") {
-        // Handle redirection for pmdevent type
-        $currentURL = $_POST['current_url'];
         if (strpos($currentURL, 'sched.php') !== false) {
             header("Location: ../../views/sched.php");
         } elseif (strpos($currentURL, 'settings.php') !== false) {
@@ -95,6 +98,7 @@ if (mysqli_stmt_execute($stmt)) {
     echo "Error adding event details: " . mysqli_stmt_error($stmt);
     $response = ["success" => false, "message" => "Error adding event details: " . mysqli_stmt_error($stmt)];
 }
+
 
 // Close the statement
 mysqli_stmt_close($stmt);

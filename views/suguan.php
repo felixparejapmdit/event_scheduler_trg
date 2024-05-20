@@ -154,7 +154,7 @@ function VenueColorCoding1($venue)
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Event Scheduler</title>
+    <title>Event Scheduler - Suguan</title>
     <link rel="icon" href="../images/scheduler.ico" type="image/x-icon">
 
 
@@ -173,7 +173,7 @@ function VenueColorCoding1($venue)
         body {
             transition: background-color 0.5s ease;
             transition: opacity 1s ease-in-out;
-            background-color: #96cdee!important; /* Default background color */
+            background-color: #7ABA78!important; /* Default background color */
             font-family: Arial, sans-serif; /* Specify a sans-serif font family */
         }
         
@@ -224,14 +224,12 @@ function VenueColorCoding1($venue)
     }
 
     </style>
-
-<script>
-        // Redirect to suguan.php after 1 minute (60000 milliseconds)
+    <script>
+        // Redirect to sched.php after 1 minute (60000 milliseconds)
         setTimeout(function() {
-            window.location.href = 'suguan.php';
+            window.location.href = 'sched.php';
         }, 60000);
     </script>
-    
 </head>
 
 <body>
@@ -378,8 +376,8 @@ document.addEventListener("DOMContentLoaded", function() {
                         </div>
                         <div class="modal-body"> 
                             <form method="post" id="addEventForm" name="addEventForm" action="../databases/queries/add_event.php">
-                            <input type="hidden" id="savetype" name="savetype" value="pmdevent">
-                            <input type="hidden" id="current_url" name="current_url" value="sched.php">
+                            <input type="hidden" id="savetype" name="savetype" value="suguanevent">
+                            <input type="hidden" id="current_url" name="current_url" value="suguan.php">
                                 <div class="form-group"  style="display: <?php echo $displayStyle; ?>;">
                                     <label for="eventName">Category:</label>
             
@@ -561,8 +559,8 @@ document.addEventListener("DOMContentLoaded", function() {
             </div>
             <div class="modal-body"> 
                 <form method="post" id="editEventForm" name="editEventForm" action="../databases/queries/update_event.php">
-                <input type="hidden" id="savetype" name="savetype" value="pmdevent">
-                <input type="hidden" id="current_url" name="current_url" value="sched.php">
+                <input type="hidden" id="savetype" name="savetype" value="suguanevent">
+                <input type="hidden" id="current_url" name="current_url" value="suguan.php">
                     <input type="hidden" id="editEventId" name="editEventId">
                     
                     <div class="form-group"  style="display: <?php echo $displayStyle; ?>;">
@@ -1157,7 +1155,7 @@ document.addEventListener("DOMContentLoaded", function() {
     $sectionid = $_GET['sectionid'];
     $today_query = "SELECT *,e.id as event_id FROM events e 
     INNER JOIN user u ON u.id = e.prepared_by 
-    WHERE  event_type = 1 AND date = '$today' AND e.prepared_by NOT IN(14, 40) 
+    WHERE  event_type = 2 AND date = '$today' AND e.prepared_by NOT IN(14, 40) 
     AND u.section = '$sectionid' 
     ORDER BY time ASC";
    }
@@ -1165,7 +1163,7 @@ document.addEventListener("DOMContentLoaded", function() {
     //echo "2";
     $today_query = "SELECT *,e.id as event_id FROM events e 
     INNER JOIN user u ON u.id = e.prepared_by 
-    WHERE is_display = 1 AND event_type = 1 AND date = '$today' AND e.prepared_by NOT IN(14, 40) 
+    WHERE is_display = 1 AND event_type = 2 AND date = '$today' AND e.prepared_by NOT IN(14, 40) 
     ORDER BY time ASC";
    }
 
@@ -1174,7 +1172,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     else{
        // echo "3";
-        $today_query = "SELECT *,e.id as event_id FROM events e WHERE e.event_type = 1 AND e.date = '$today' AND e.prepared_by = " . $_SESSION['userid'] . " ORDER BY e.time ASC";
+        $today_query = "SELECT *,e.id as event_id FROM events e WHERE e.event_type = 2 AND e.date = '$today' AND e.prepared_by = " . $_SESSION['userid'] . " ORDER BY e.time ASC";
     }
    
 //echo $today_query;
@@ -1365,7 +1363,7 @@ echo '</div>';
 
     if($_SESSION['role'] == 1 || $_SESSION['role'] == 3)
     {
-        //$today_query = "SELECT * FROM events WHERE is_display = 1 AND event_type = 1 AND date = '$tomorrow' AND events.prepared_by NOT IN(1, 14, 40) ORDER BY time ASC";
+        //$today_query = "SELECT * FROM events WHERE is_display = 1 AND event_type = 2 AND date = '$tomorrow' AND events.prepared_by NOT IN(1, 14, 40) ORDER BY time ASC";
         // Get the roleid from the URL
     if (!isset($_GET['role'])) 
     {
@@ -1381,19 +1379,19 @@ echo '</div>';
   
     $today_query = "SELECT *,e.id as event_id  FROM events e 
     INNER JOIN user u ON u.id = e.prepared_by 
-    WHERE event_type = 1 AND date = '$tomorrow' AND e.prepared_by NOT IN(14, 40) 
+    WHERE event_type = 2 AND date = '$tomorrow' AND e.prepared_by NOT IN(14, 40) 
     AND u.section = '$sectionid' 
     ORDER BY time ASC";
    }
    else{
     $today_query = "SELECT *,e.id as event_id  FROM events e 
     INNER JOIN user u ON u.id = e.prepared_by 
-    WHERE is_display = 1 AND event_type = 1 AND date = '$tomorrow' AND e.prepared_by NOT IN(14, 40)  
+    WHERE is_display = 1 AND event_type = 2 AND date = '$tomorrow' AND e.prepared_by NOT IN(14, 40)  
     ORDER BY time ASC";
    }
     }
     else{
-        $today_query = "SELECT *,e.id as event_id  FROM events e WHERE e.event_type = 1 AND e.date = '$tomorrow' AND e.prepared_by = " . $_SESSION['userid'] . " ORDER BY e.time ASC";
+        $today_query = "SELECT *,e.id as event_id  FROM events e WHERE e.event_type = 2 AND e.date = '$tomorrow' AND e.prepared_by = " . $_SESSION['userid'] . " ORDER BY e.time ASC";
     }
 
     $today_result = mysqli_query($conn, $today_query);
@@ -1596,12 +1594,12 @@ echo '</div>';
          // Check if the current URL contains 'userid'
          if (strpos($current_url, 'sectionid') !== false) {
             // Get the count of upcoming events (excluding today and tomorrow)
-            $upcoming_event_count_pmd = getEventCount($conn, "DATE(e.date) > CURDATE() + INTERVAL 1 DAY AND e.event_type = 1 AND e.prepared_by NOT IN(14, 40) AND u.section ='$sectionid' ");
+            $upcoming_event_count_pmd = getEventCount($conn, "DATE(e.date) > CURDATE() + INTERVAL 1 DAY AND e.event_type = 2 AND e.prepared_by NOT IN(14, 40) AND u.section ='$sectionid' ");
          }
          else
          {
             // Get the count of upcoming events (excluding today and tomorrow)
-            $upcoming_event_count_pmd = getEventCount($conn, "DATE(e.date) > CURDATE() + INTERVAL 1 DAY AND e.event_type = 1 AND e.prepared_by NOT IN(14, 40) ");
+            $upcoming_event_count_pmd = getEventCount($conn, "DATE(e.date) > CURDATE() + INTERVAL 1 DAY AND e.event_type = 2 AND e.prepared_by NOT IN(14, 40) ");
          }
       
         $eventlabel_pmd = "TRG";
@@ -1610,7 +1608,7 @@ echo '</div>';
     else
     {
         // Get the count of upcoming events (excluding today and tomorrow)
-        $upcoming_event_count_pmd = getEventCount($conn, "DATE(e.date) > CURDATE() + INTERVAL 1 DAY AND e.event_type = 1 AND e.prepared_by = $userid");
+        $upcoming_event_count_pmd = getEventCount($conn, "DATE(e.date) > CURDATE() + INTERVAL 1 DAY AND e.event_type = 2 AND e.prepared_by = $userid");
         $eventlabel_pmd = "My Section";
         $eventlabel_section = "My Schedule";
     }
@@ -1654,11 +1652,11 @@ echo '</div>';
             (SELECT SUM(cnt) FROM (SELECT COUNT(*) AS cnt 
             FROM events e
             INNER JOIN user u ON u.id = e.prepared_by 
-            WHERE event_type = 1 AND e.date > '$day_after_tomorrow' 
+            WHERE event_type = 2 AND e.date > '$day_after_tomorrow' 
             AND u.section = '$sectionid' GROUP BY e.date) AS subquery) AS total_event_count
             FROM events e
             INNER JOIN user u ON u.id = e.prepared_by 
-            WHERE event_type = 1 AND date > '$day_after_tomorrow' AND e.prepared_by NOT IN(14, 40) 
+            WHERE event_type = 2 AND date > '$day_after_tomorrow' AND e.prepared_by NOT IN(14, 40) 
             AND u.section = '$sectionid'
             GROUP BY date ORDER BY date ASC";
 
@@ -1666,19 +1664,19 @@ echo '</div>';
         else{
             $today_query = "SELECT date, COUNT(*) AS event_count, e.id,
             (SELECT SUM(cnt) FROM (SELECT COUNT(*) AS cnt FROM events 
-            WHERE is_display = 1 AND event_type = 1 AND date > '$day_after_tomorrow' GROUP BY date) AS subquery) AS total_event_count
+            WHERE is_display = 1 AND event_type = 2 AND date > '$day_after_tomorrow' GROUP BY date) AS subquery) AS total_event_count
             FROM events e
             INNER JOIN user u ON u.id = e.prepared_by 
-            WHERE is_display = 1 AND event_type = 1 AND date > '$day_after_tomorrow' AND e.prepared_by NOT IN(14, 40) 
+            WHERE is_display = 1 AND event_type = 2 AND date > '$day_after_tomorrow' AND e.prepared_by NOT IN(14, 40) 
             GROUP BY date ORDER BY date ASC";
         }
         } 
         else {
             $today_query = "SELECT date, COUNT(*) AS event_count, id,
             (SELECT SUM(cnt) FROM (SELECT COUNT(*) AS cnt FROM events 
-            WHERE event_type = 1 AND date > '$day_after_tomorrow' 
+            WHERE event_type = 2 AND date > '$day_after_tomorrow' 
             AND prepared_by = " . $_SESSION['userid'] . " GROUP BY date) AS subquery) AS total_event_count
-            FROM events WHERE event_type = 1 AND date > '$day_after_tomorrow' AND prepared_by = " . $_SESSION['userid'] . " 
+            FROM events WHERE event_type = 2 AND date > '$day_after_tomorrow' AND prepared_by = " . $_SESSION['userid'] . " 
             GROUP BY date ORDER BY date ASC";
         }
 
@@ -1749,7 +1747,7 @@ echo '</div>';
                     $dateQuery = "SELECT * , e.id as eventid
                     FROM events e
                     INNER JOIN user u ON u.id = e.prepared_by 
-                    WHERE e.event_type = 1 AND e.date = '$upcomingDate' AND  u.section = '$sectionid'
+                    WHERE e.event_type = 2 AND e.date = '$upcomingDate' AND  u.section = '$sectionid'
                     ORDER BY e.date ASC, e.time ASC";
                     
                 
@@ -1757,7 +1755,7 @@ echo '</div>';
                     $dateQuery = "SELECT *, e.id as eventid
                     FROM events e
                     INNER JOIN user u ON u.id = e.prepared_by 
-                    WHERE e.is_Display = 1 AND e.event_type = 1 AND e.date = '$upcomingDate'
+                    WHERE e.is_Display = 1 AND e.event_type = 2 AND e.date = '$upcomingDate'
                     ORDER BY e.date ASC, e.time ASC";
                 
                 }
@@ -1765,7 +1763,7 @@ echo '</div>';
             else
             {
                 $dateQuery = "SELECT * FROM events 
-                WHERE event_type = 1 AND date = '$upcomingDate' 
+                WHERE event_type = 2 AND date = '$upcomingDate' 
                 AND prepared_by = " . $_SESSION['userid'] . " ORDER BY date ASC, time ASC";
             }
 
