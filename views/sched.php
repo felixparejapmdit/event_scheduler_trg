@@ -112,98 +112,37 @@ function IconForEvent($eventId)
 
 function VenueColorCoding($venue)
 {
+   
     switch($venue)
     {
-        case "MPH":
-            echo '<b><a style="color: #519eaa;">' . $venue . '</a></b><br>';
-            break;
-        case "Chapel 1":
-            echo '<b><a style="color: #d09e6a;">' . $venue . '</a></b><br>';
-            break;
-        case "Chapel 4":
-            echo '<b><a style="color: #248fb2;">' . $venue . '</a></b><br>';
-            break;
-        case "Studio A":
-            echo '<b><a style="color: #5c65bd;">' . $venue . '</a></b><br>';
-            break;
-        case "Studio B":
-            echo '<b><a style="color: #af479f;">' . $venue . '</a></b><br>';
-            break;
-        case "Studio C":
-            echo '<b><a style="color: #0083cd;">' . $venue . '</a></b><br>';
-            break;
-        case "6F Conference Room":
-            echo '<b><a style="color: #238fb6;">' . $venue . '</a></b><br>';
-            break;
-        case "3F Common Area":
-            echo '<b><a style="color: #5567a9;">' . $venue . '</a></b><br>';
-            break;
-        case "3F Conference Room":
-            echo '<b><a style="color: #5c64ae;">' . $venue . '</a></b><br>';
-            break;
-        case "3F Language Room":
-            echo '<b><a style="color: #b7be64;">' . $venue . '</a></b><br>';
-            break;
-        case "3F Dojo Room":
-            echo '<b><a style="color: #c78171;">' . $venue . '</a></b><br>';
-            break;
-        case "Auditorium":
-            echo '<b><a style="color: #7a5aab;">' . $venue . '</a></b><br>';
-            break;
-        case "Public Lobby":
-            echo '<b><a style="color: #e0c750;">' . $venue . '</a></b><br>';
-            break;
+        case "1":
+            return '<b><a href="#" style="color: #519eaa;">TRG Conference room</a></b><br>';
+        case "2":
+            return '<b><a href="#" style="color: #d09e6a;">ECD Office</a></b>';
+        case "3":
+            return '<b><a href="#" style="color: #248fb2;">SFM - TRG Satellite Office</a></b>';
         default:
-            echo '<b><a style="color: #6e9f8a;">' . $venue . '</a></b><br>';
-            break;
+            return '<b><a href="#" style="color: #6e9f8a;">TRG Office</a></b>';
     }
 }
 
+
 function VenueColorCoding1($venue)
 {
+    //echo $venue;
     switch($venue)
     {
-        case "MPH":
-            return '<b><a style="color: #519eaa;">' . $venue . '</a></b>';
+        case "1":
+            return '<b><a style="color: #519eaa;">TRG Conference room</a></b>';
             break;
-        case "Chapel 1":
-            return '<b><a style="color: #d09e6a;">' . $venue . '</a></b>';
+        case "2":
+            return '<b><a style="color: #d09e6a;">ECD Office</a></b>';
             break;
-        case "Chapel 4":
-            return '<b><a style="color: #248fb2;">' . $venue . '</a></b>';
-            break;
-        case "Studio A":
-            return '<b><a style="color: #5c65bd;">' . $venue . '</a></b>';
-            break;
-        case "Studio B":
-            return '<b><a style="color: #af479f;">' . $venue . '</a></b>';
-            break;
-        case "Studio C":
-            return '<b><a style="color: #0083cd;">' . $venue . '</a></b>';
-            break;
-        case "6F Conference Room":
-            return '<b><a style="color: #238fb6;">' . $venue . '</a></b>';
-            break;
-        case "3F Common Area":
-            return '<b><a style="color: #5567a9;">' . $venue . '</a></b>';
-            break;
-        case "3F Conference Room":
-            return '<b><a style="color: #5c64ae;">' . $venue . '</a></b>';
-            break;
-        case "3F Language Room":
-            return '<b><a style="color: #b7be64;">' . $venue . '</a></b>';
-            break;
-        case "3F Dojo Room":
-            return '<b><a style="color: #c78171;">' . $venue . '</a></b>';
-            break;
-        case "Auditorium":
-            return '<b><a style="color: #7a5aab;">' . $venue . '</a></b>';
-            break;
-        case "Public Lobby":
-            return '<b><a style="color: #e0c750;">' . $venue . '</a></b>';
+        case "3":
+            return '<b><a style="color: #248fb2;">SFM - TRG Satellite Office</a></b>';
             break;
         default:
-            return '<b><a style="color: #6e9f8a;">' . $venue . '</a></b>';
+            return '<b><a style="color: #6e9f8a;">TRG Office</a></b>';
             break;
     }
 }
@@ -1310,8 +1249,9 @@ document.addEventListener("DOMContentLoaded", function() {
         
         // Check the event name value and conditionally display the time and location
         if (!in_array($eventName, [1, 2, 5])) {
+           
             echo '<b><span style="color: #231c35;margin-bottom: 0;">' . $time_12_hour . '</span></b><br>';
-            VenueColorCoding($location);
+            echo VenueColorCoding($location);
             } 
 
 
