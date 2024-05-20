@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2024 at 10:35 AM
+-- Generation Time: May 20, 2024 at 10:27 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -87,7 +87,9 @@ INSERT INTO `events` (`id`, `event_name`, `title`, `incharge`, `contact_number`,
 (10, 'Others', 'PAMAMAHAYAG ', 'Medel Salise Jr.', '@MedelSalise', '', '2024-05-31', '20:00:00', NULL, NULL, 'Novaliches, QC', NULL, NULL, 0, '1', NULL, 1, '', 1),
 (11, '7', 'Panata at Pulong', 'Ka RTG', '@rtg', '', '2024-05-17', '07:00:00', NULL, NULL, 'TRG OFFICE', NULL, NULL, 0, '1', NULL, 1, 'All Ministro at Mwa', 1),
 (12, 'Others', 'Paalala po!!!', 'Ka RTG', 'https://t.me/rondg314159', '', '2024-05-17', '07:00:00', NULL, NULL, 'TRG OFFICE', NULL, NULL, 0, '1', NULL, 1, '1.Huwag po natin malimutan Lumagda sa Weekends Suguan at Weekly Visitation po\r\n\r\n2.Tiyakin po natin nakapag la log in-out tayo sa logbook pag ginagamit natin ang mga Sasakyan/Ibalik ang mga Susi sa lalagyan at sa naka assign na parking po\r\n                                                                ', 1),
-(13, '1', 'Advanced Happy Birthday po!!!', 'Jester Niko NIcolas', 'https://t.me/jndnicolas', '', '2024-05-23', '12:00:00', NULL, NULL, '', NULL, NULL, 0, '1', NULL, 1, 'May 23, 2024', 1);
+(13, '1', 'Advanced Happy Birthday po!!!', 'Jester Niko NIcolas', 'https://t.me/jndnicolas', '', '2024-05-20', '12:00:00', NULL, NULL, '', NULL, NULL, 0, '1', NULL, 1, 'May 23, 2024', 1),
+(14, 'Others', 'Reminders', 'Ka Ron de Guzman', '@rondg314159', '', '2024-05-20', '07:00:00', NULL, NULL, 'TRG Office', NULL, NULL, 0, NULL, NULL, 1, 'Weekly Meeting (all Mtro/Mwa) @01:30PM', 0),
+(15, '7', 'Weekly Meeting', 'Ka Ron de Guzman', '@rondg314159', '', '2024-05-20', '13:30:00', NULL, NULL, '1', NULL, NULL, 0, '1', NULL, 1, 'All Mtro @ Mwa', 1);
 
 -- --------------------------------------------------------
 
@@ -238,7 +240,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `location`
