@@ -260,7 +260,7 @@ function VenueColorCoding1($venue)
         if (isFullscreen) {
             // Redirect to suguan.php after 1 minute (60000 milliseconds)
             setTimeout(function() {
-                loadSuguan();
+                //loadSuguan();
             }, 10000); // Adjust the timeout to 10 seconds for testing
         }
     }
