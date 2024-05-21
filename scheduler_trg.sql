@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2024 at 10:27 AM
+-- Generation Time: May 21, 2024 at 06:19 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -65,6 +65,7 @@ CREATE TABLE `events` (
   `start_time` time DEFAULT NULL,
   `end_time` time DEFAULT NULL,
   `location` varchar(100) DEFAULT NULL,
+  `district` varchar(255) DEFAULT NULL,
   `goals` text DEFAULT NULL,
   `daily_notes` varchar(250) DEFAULT NULL,
   `weeknumber` int(11) DEFAULT NULL,
@@ -79,17 +80,20 @@ CREATE TABLE `events` (
 -- Dumping data for table `events`
 --
 
-INSERT INTO `events` (`id`, `event_name`, `title`, `incharge`, `contact_number`, `host`, `date`, `time`, `start_time`, `end_time`, `location`, `goals`, `daily_notes`, `weeknumber`, `prepared_by`, `submitted_by`, `event_type`, `details`, `is_display`) VALUES
-(3, '4', 'Pamamahagi ng Pasugo at Polyeto', 'Medel Salise Jr', '@MedelSalise01', '', '2024-05-26', '17:00:00', NULL, NULL, 'Lokal ng NOVALICHES', NULL, NULL, 0, '1', NULL, 1, '', 1),
-(7, '1', 'BIRTHDAY CELEBRANT (TODAY)', 'Alvin David', 'https://t.me/alvinkyle', '', '2024-05-15', '07:00:00', NULL, NULL, '', NULL, NULL, 0, '1', NULL, 1, 'Belated Happy Birthday po!!!', 1),
-(8, '4', 'HERITAGE TOUR', 'Gloverick Parungao', '@Gloverick', '', '2024-05-25', '07:00:00', NULL, NULL, 'MUSEUM, PUNTA STA ANA, TIPAS, PHIL ARENA', NULL, NULL, 0, '1', NULL, 1, '', 1),
-(9, '4', 'Batarisang Paglilinis', 'Ka RTG', '@rondg314159', '', '2024-05-29', '08:00:00', NULL, NULL, 'TRG OFFICE', NULL, NULL, 0, '1', NULL, 1, '', 1),
-(10, 'Others', 'PAMAMAHAYAG ', 'Medel Salise Jr.', '@MedelSalise', '', '2024-05-31', '20:00:00', NULL, NULL, 'Novaliches, QC', NULL, NULL, 0, '1', NULL, 1, '', 1),
-(11, '7', 'Panata at Pulong', 'Ka RTG', '@rtg', '', '2024-05-17', '07:00:00', NULL, NULL, 'TRG OFFICE', NULL, NULL, 0, '1', NULL, 1, 'All Ministro at Mwa', 1),
-(12, 'Others', 'Paalala po!!!', 'Ka RTG', 'https://t.me/rondg314159', '', '2024-05-17', '07:00:00', NULL, NULL, 'TRG OFFICE', NULL, NULL, 0, '1', NULL, 1, '1.Huwag po natin malimutan Lumagda sa Weekends Suguan at Weekly Visitation po\r\n\r\n2.Tiyakin po natin nakapag la log in-out tayo sa logbook pag ginagamit natin ang mga Sasakyan/Ibalik ang mga Susi sa lalagyan at sa naka assign na parking po\r\n                                                                ', 1),
-(13, '1', 'Advanced Happy Birthday po!!!', 'Jester Niko NIcolas', 'https://t.me/jndnicolas', '', '2024-05-20', '12:00:00', NULL, NULL, '', NULL, NULL, 0, '1', NULL, 1, 'May 23, 2024', 1),
-(14, 'Others', 'Reminders', 'Ka Ron de Guzman', '@rondg314159', '', '2024-05-20', '07:00:00', NULL, NULL, 'TRG Office', NULL, NULL, 0, NULL, NULL, 1, 'Weekly Meeting (all Mtro/Mwa) @01:30PM', 0),
-(15, '7', 'Weekly Meeting', 'Ka Ron de Guzman', '@rondg314159', '', '2024-05-20', '13:30:00', NULL, NULL, '1', NULL, NULL, 0, '1', NULL, 1, 'All Mtro @ Mwa', 1);
+INSERT INTO `events` (`id`, `event_name`, `title`, `incharge`, `contact_number`, `host`, `date`, `time`, `start_time`, `end_time`, `location`, `district`, `goals`, `daily_notes`, `weeknumber`, `prepared_by`, `submitted_by`, `event_type`, `details`, `is_display`) VALUES
+(3, '4', 'Pamamahagi ng Pasugo at Polyeto', 'Medel Salise Jr', '@MedelSalise01', '', '2024-06-02', '17:00:00', NULL, NULL, 'Lokal ng NOVALICHES, QC', '', NULL, NULL, 0, '1', NULL, 1, '', 1),
+(7, '1', 'BIRTHDAY CELEBRANT (TODAY)', 'Alvin David', 'https://t.me/alvinkyle', '', '2024-05-15', '07:00:00', NULL, NULL, '', '', NULL, NULL, 0, '1', NULL, 1, 'Belated Happy Birthday po!!!', 1),
+(8, '4', 'HERITAGE TOUR', 'Gloverick Parungao', '@Gloverick', '', '2024-05-25', '07:00:00', NULL, NULL, 'MUSEUM, PUNTA STA ANA, TIPAS, PHIL ARENA', '', NULL, NULL, 0, '1', NULL, 1, '', 1),
+(9, '4', 'Batarisang Paglilinis', 'Ka RTG', '@rondg314159', '', '2024-05-29', '08:00:00', NULL, NULL, 'TRG OFFICE', '', NULL, NULL, 0, '1', NULL, 1, '', 1),
+(10, 'Others', 'PAMAMAHAYAG ', 'Medel Salise Jr.', '@MedelSalise', '', '2024-06-03', '20:00:00', NULL, NULL, 'Novaliches, QC', '', NULL, NULL, 0, '1', NULL, 1, '', 1),
+(11, '7', 'Panata at Pulong', 'Ka RTG', '@rtg', '', '2024-05-17', '07:00:00', NULL, NULL, 'TRG OFFICE', '', NULL, NULL, 0, '1', NULL, 1, 'All Ministro at Mwa', 1),
+(12, 'Others', 'Paalala po!!!', 'Ka RTG', 'https://t.me/rondg314159', '', '2024-05-17', '07:00:00', NULL, NULL, 'TRG OFFICE', '', NULL, NULL, 0, '1', NULL, 1, '1.Huwag po natin malimutan Lumagda sa Weekends Suguan at Weekly Visitation po\r\n\r\n2.Tiyakin po natin nakapag la log in-out tayo sa logbook pag ginagamit natin ang mga Sasakyan/Ibalik ang mga Susi sa lalagyan at sa naka assign na parking po\r\n                                                                ', 1),
+(13, '1', 'Advanced Happy Birthday po!!!', 'Jester Niko NIcolas', 'https://t.me/jndnicolas', '', '2024-05-21', '12:00:00', NULL, NULL, '', '', NULL, NULL, 0, '1', NULL, 1, 'May 23, 2024', 1),
+(14, 'Others', 'Reminders', 'Ka Ron de Guzman', '@rondg314159', '', '2024-05-20', '07:00:00', NULL, NULL, 'TRG Office', '', NULL, NULL, 0, NULL, NULL, 1, 'Weekly Meeting (all Mtro/Mwa) @01:30PM', 0),
+(15, '7', 'Weekly Meeting', 'Ka Ron de Guzman', '@rondg314159', '', '2024-05-20', '13:30:00', NULL, NULL, '1', '', NULL, NULL, 0, '1', NULL, 1, 'All Mtro @ Mwa', 1),
+(24, 'Others', 'Please Read!!!', 'HD', '@trg_hdAd', '', '2024-05-22', '07:00:00', NULL, NULL, 'TRG OFFICE', '', NULL, NULL, 0, '1', NULL, 1, '1. Paalala po mag log in/out po tayo pag ginagamit po natin ang ating mga Service Vehicles.\r\n2.Ibalik po natin o Iwan po natin ang mga Susi ng sasakyan..\r\n3. Ilagay po sa Tamang Parking.\r\n                                                Salamat po...', 1),
+(25, 'Suguan', 'Felix Pareja', '', '', '', '2024-05-22', '19:30:00', NULL, NULL, 'Deparo', 'Caloocan North', NULL, NULL, 0, '1', NULL, 2, '3', 1),
+(27, 'Suguan', 'Kim Amaro', '', '', NULL, '2024-05-23', '19:00:00', NULL, NULL, 'Tandang Sora', 'Central', NULL, NULL, 0, '1', NULL, 2, '4', 1);
 
 -- --------------------------------------------------------
 
@@ -240,7 +244,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `location`
