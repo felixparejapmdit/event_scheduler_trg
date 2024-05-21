@@ -26,25 +26,66 @@
 </style>
 
 <!-- Fixed icons -->
-<?php if ($_SESSION['role'] != 3){ ?>
+<?php if ($_SESSION['role'] != 3): ?>
     <div class="fixed-icons">
-    <!-- Toggle icons button -->
-    <!-- <button id="toggleIconsBtn"><i class="fas fa-chevron-left"></i></button> -->
-    <!-- Events icon -->
-    <a href="../views/sched.php" id="eventsBtn"><i class="fas fa-calendar"></i></a>
-    <!-- Settings icon -->
-    <a href="../views/settings.php" id="settingsBtn"><i class="fas fa-cog"></i></a>
-    <!-- Add icon (opens modal) -->
-    <button data-toggle="modal" data-target="#EventAddModal"><i class="fas fa-plus"></i></button>
-    
-    <!-- Logout Button -->
-    <a href="#" data-toggle="modal" data-target="#confirmationModal">
-        <i class="fas fa-sign-out-alt"></i>
-    </a>
-</div>
+        <!-- Toggle icons button -->
+        <!-- <button id="toggleIconsBtn"><i class="fas fa-chevron-left"></i></button> -->
+        <!-- Events icon -->
+        <a href="../views/sched.php" id="eventsBtn"><i class="fas fa-calendar"></i></a>
+        <!-- Settings icon -->
+        <a href="../views/settings.php" id="settingsBtn"><i class="fas fa-cog"></i></a>
+        <!-- Add icon (opens modal) -->
+        <button data-toggle="modal" data-target="#EventAddModal"><i class="fas fa-plus"></i></button>
+        <!-- Fullscreen icon -->
+        <button id="fullscreenBtn"><i class="fas fa-expand"></i></button>
+        <!-- Logout Button -->
+        <a href="#" data-toggle="modal" data-target="#confirmationModal"><i class="fas fa-sign-out-alt"></i></a>
+    </div>
+<?php endif; ?>
 
-<?php } ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var fullscreenBtn = document.getElementById('fullscreenBtn');
 
+        // Add click event listener to the fullscreen button
+        fullscreenBtn.addEventListener('click', function() {
+            if (document.fullscreenElement) {
+                exitFullscreen();
+            } else {
+                enterFullscreen();
+            }
+        });
+
+        // Function to enter fullscreen mode
+        function enterFullscreen() {
+            var element = document.documentElement;
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullscreen) {
+                element.webkitRequestFullscreen();
+            } else if (element.msRequestFullscreen) {
+                element.msRequestFullscreen();
+            }
+
+            
+        }
+
+        // Function to exit fullscreen mode
+        function exitFullscreen() {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+    });
+</script>
 
 <!-- Confirmation modal -->
 <div class="modal fade" data-backdrop="static" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
@@ -119,6 +160,9 @@ if (window.location.href.includes('settings')) {
     // Hide eventsBtn if the URL contains "settings"
     document.getElementById('settingsBtn').style.display = 'none';
 } else if (window.location.href.includes('sched')) {
+    // Hide settingsBtn if the URL contains "sched"
+    document.getElementById('eventsBtn').style.display = 'none';
+} else if (window.location.href.includes('suguan')) {
     // Hide settingsBtn if the URL contains "sched"
     document.getElementById('eventsBtn').style.display = 'none';
 } 

@@ -224,13 +224,54 @@ function VenueColorCoding1($venue)
     }
 
     </style>
-
 <script>
-        // Redirect to suguan.php after 1 minute (60000 milliseconds)
-        setTimeout(function() {
-            window.location.href = 'suguan.php';
-        }, 60000);
-    </script>
+
+    function loadSuguan() {
+        // Create a new XMLHttpRequest object
+        var xhr = new XMLHttpRequest();
+
+        // Define the URL of suguan.php
+        var url = 'suguan.php';
+
+        // Send a GET request to suguan.php
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = function() {
+            // Check if the request is completed and the response is ready
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                // Check if the request was successful (status code 200)
+                if (xhr.status === 200) {
+                    // Insert the response HTML into divSuguan
+                    document.getElementById('divSuguan').innerHTML = xhr.responseText;
+                    document.getElementById('sched_event').style.display = 'none';
+                } else {
+                    // Display an error message if the request fails
+                    console.error('Failed to load suguan.php. Status code: ' + xhr.status);
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    function checkFullscreen() {
+        var isFullscreen = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+        
+        
+        // Check if the screen is in fullscreen mode
+        if (isFullscreen) {
+            // Redirect to suguan.php after 1 minute (60000 milliseconds)
+            setTimeout(function() {
+                loadSuguan();
+            }, 10000); // Adjust the timeout to 10 seconds for testing
+        }
+    }
+
+    // Call the function after a slight delay to ensure the document is fully loaded
+    setTimeout(checkFullscreen, 100);
+    
+    // Add event listener for fullscreen change
+    document.onfullscreenchange = checkFullscreen;
+</script>
+
     
 </head>
 
@@ -753,342 +794,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     
-<!-- Main content area -->
-<div class="d-contents mt-2" id="mainContent">
-    <div class="row">
-        <div id="dynamicContent" class="col-md-12 mt-2" style="display:none;">
-            
-            <input type="hidden" id="savetype" name="savetype" value="daily">
-            <input type="hidden" id="userid" name="userid" value="<?php echo $userid; ?>">
-
-
-            <div class="col-md-12 mt-2">
-                <div class="row justify-content-center">
-                    <div class="col-md-12">
-            
-                    <div class="d-flex align-items-center mb-4">
-                        <a href="../views/sched.php" class="btn btn-link"  style="display:none;">
-                            <i class="fas fa-arrow-left"></i> <!-- Font Awesome arrow-left icon -->
-                        </a>
-                        <h4 class="mb-0 ml-2"  style="display:none;">TRG Events List</h4>
-                    </div>
-
-
-                    <div class="d-flex align-items-center md-6">
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#EventAddModal" style="margin-bottom: 10px;">
-                            <i class="fas fa-plus"></i> Event<!-- Font Awesome folder-plus icon -->
-                        </button>
-
-                        <!-- Button to open the iframe modal -->
-                        <button type="button" class="btn btn-success" id="viewButton" style="margin-bottom: 10px; margin-left: 10px;display:none;">
-                            <i class="fas fa-eye"></i> Event Viewer
-                        </button>
-
-                        <!-- Button to toggle past events -->
-                        <button type="button" class="btn btn-success" id="pastEventsButton" style="margin-bottom: 10px; margin-left: 10px;">
-                            <i class="fas fa-eye"></i> View Past Events
-                        </button>
-
-                        <!-- Section to display past events (initially hidden) -->
-                        <div id="pastEventsSection" style="display: none;">
-                            <!-- Past events content goes here -->
-                            <!-- You can populate this section with past events using PHP or JavaScript -->
-                        </div>
-
-                        <!-- Button to print table data -->
-                        <button type="button" class="btn btn-success" id="printButton" style="margin-bottom: 10px; margin-left: 10px;">
-                            <i class="fas fa-print"></i> Print
-                        </button>
-                    </div>
-
-                <script>
-                    // Function to print the table data
-                    function printTable() {
-                        // Hide the print button and past events section for printing
-                        document.getElementById("printButton").style.display = "none";
-                        document.getElementById("pastEventsSection").style.display = "none";
-
-                        // Open the print dialog
-                        window.print();
-
-                        // Restore the visibility of the print button and past events section after printing
-                        document.getElementById("printButton").style.display = "block";
-                        document.getElementById("pastEventsSection").style.display = "block";
-                    }
-
-                    // Add event listener to the print button
-                    document.getElementById("printButton").addEventListener("click", printTable);
-                </script>
-
-
-
-
-                <script>
-                    // Function to toggle visibility of past events section and update URL
-                    function togglePastEvents() {
-                        var pastEventsVisible = !getParameterByName('show_past_events');
-                        var url = window.location.href.split('?')[0]; // Get the base URL without query parameters
-                        if (pastEventsVisible) {
-                            url += '?show_past_events=1'; // Add query parameter to show past events
-                        }
-                        window.location.href = url; // Redirect to the updated URL
-                    }
-
-                    // Function to get query parameter value by name
-                    function getParameterByName(name, url) 
-                    {
-                        if (!url) url = window.location.href;
-                        name = name.replace(/[\[\]]/g, '\\$&');
-                        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                            results = regex.exec(url);
-                        if (!results) return null;
-                        if (!results[2]) return '';
-                        return decodeURIComponent(results[2].replace(/\+/g, ' '));
-                    }
-
-                    // Add event listener to the button to toggle past events visibility
-                    document.getElementById("pastEventsButton").addEventListener("click", togglePastEvents);
-
-                    // Check if past events section is initially visible and adjust button text accordingly
-                    if (getParameterByName('show_past_events')) {
-                        document.getElementById("pastEventsButton").innerText = "Hide Past Events";
-                    }
-                </script>
-
-
-
-                <!-- JavaScript to create modal and iframe -->
-                <script>
-                    document.getElementById('viewButton').addEventListener('click', function() {
-                        // Create the modal overlay
-                        var modalOverlay = document.createElement('div');
-                        modalOverlay.style.position = 'fixed';
-                        modalOverlay.style.top = '0';
-                        modalOverlay.style.left = '0';
-                        modalOverlay.style.width = '100%';
-                        modalOverlay.style.height = '100%';
-                        modalOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Semi-transparent black background
-                        modalOverlay.style.display = 'flex';
-                        modalOverlay.style.justifyContent = 'center';
-                        modalOverlay.style.alignItems = 'center';
-                        modalOverlay.style.zIndex = '1000'; // Ensure it appears above other content
-
-                        // Create the iframe container
-                        var iframeContainer = document.createElement('div');
-                        iframeContainer.style.backgroundColor = '#fff'; // White background
-                        iframeContainer.style.padding = '20px'; // Add some padding
-                        iframeContainer.style.borderRadius = '8px'; // Rounded corners
-                        iframeContainer.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)'; // Drop shadow
-                        iframeContainer.style.width = '80%'; // Adjust width as needed
-
-                        // Calculate the height of the iframe
-                        var screenHeight = window.innerHeight;
-                        var iframeHeight = screenHeight * 0.85; // 75% of the screen height
-                        iframeContainer.style.height = iframeHeight + 'px'; // Set the height dynamically
-
-                        // Create the close button
-                        var closeButton = document.createElement('button');
-                        closeButton.innerHTML = '&times;'; // Times symbol (close icon)
-                        closeButton.style.position = 'absolute';
-                        closeButton.style.top = '10px';
-                        closeButton.style.right = '10px';
-                        closeButton.style.border = 'none';
-                        closeButton.style.background = '#f44336'; // Red background color
-                        closeButton.style.color = '#fff'; // White text color
-                        closeButton.style.width = '30px'; // Set width and height to create a circle
-                        closeButton.style.height = '30px';
-                        closeButton.style.borderRadius = '50%'; // Make it a circle
-                        closeButton.style.fontSize = '16px'; // Increase font size
-                        closeButton.style.lineHeight = '1'; // Center the symbol vertically
-                        closeButton.style.textAlign = 'center'; // Center the symbol horizontally
-                        closeButton.style.cursor = 'pointer';
-
-                        // Close button click event handler
-                        closeButton.addEventListener('click', function() {
-                            // Remove the modal overlay and iframe container
-                            document.body.removeChild(modalOverlay);
-                        });
-
-                        // Create the iframe
-                        var iframe = document.createElement('iframe');
-                        iframe.src = '../views/sched.php'; // Set the src attribute to index.php
-                        iframe.style.width = '100%';
-                        iframe.style.height = '100%';
-                        iframe.style.border = 'none'; // Remove border
-                        iframe.setAttribute('allowfullscreen', ''); // Allow fullscreen mode
-
-                        // Append the close button and iframe to the iframe container
-                        iframeContainer.appendChild(closeButton);
-                        iframeContainer.appendChild(iframe);
-
-                        // Append the iframe container to the modal overlay
-                        modalOverlay.appendChild(iframeContainer);
-
-                        // Append the modal overlay to the document body
-                        document.body.appendChild(modalOverlay);
-                    });
-                </script>
-
-                    <div class="table-responsive" style="margin-top:20px;">
-
-                        <table class="table table-bordered">
-                            <thead class="table-dark">
-                                <tr>
-                                <th>#</th>
-                                    <th>Category</th>
-                                    <th>Title</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Location</th>
-                                    <th>Person In charge</th>
-                                    <th>Contact #</th>
-                                    <th>Details</th>
-                                    <?php
-                                        // Check if the session role is equal to 1
-                                        if ($_SESSION['role'] == 1) {
-                                            // Display the "Display?" header
-                                            echo "<th>Display?</th>";
-                                        }
-                                    ?>
-                                    <th class="table-action-column">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-
-                                // Initialize row counter
-                                $rowNumber = 1;
-                                // Check connection
-                                if (!$conn) {
-                                    die("Connection failed: " . mysqli_connect_error());
-                                }
-
-                                // Get today's date
-                                $today = date("Y-m-d");
-
-                                // Check if past events section is visible based on the URL query parameter
-                                $showPastEvents = isset($_GET['show_past_events']) && $_GET['show_past_events'] == '1';
-
-                                // Initialize the WHERE clause for the query based on the user's role
-                                $whereClause = $_SESSION['role'] == 1 ? "" : "AND prepared_by = " . $_SESSION['userid'];
-
-                                // Add condition to exclude events with event_name 'weekly_update'
-                                $whereClause .= " AND event_name != 'weekly_update'";
-
-                                // Build the query based on the user's role and the visibility of past events
-                                $today_query = $showPastEvents 
-                                    ? "SELECT * FROM events WHERE date < '$today' $whereClause ORDER BY id DESC, date DESC" 
-                                    : "SELECT * FROM events WHERE date >= '$today' $whereClause ORDER BY id DESC, date DESC";
-
-                                $today_result = mysqli_query($conn, $today_query);
-
-                                while ($row = mysqli_fetch_assoc($today_result)) {
-                                    // Adjusting row values
-                                    $eventName = $row['event_name'];
-                                    $title = $row['title'];
-                                
-                                            // Change date format
-                                $date = date("F j, Y", strtotime($row['date']));
-                                    // Convert time to 12-hour format
-                                    $time_12_hour = date("h:i A", strtotime($row['time']));
-                                    $location = $row['location'];
-                                    $incharge = $row['incharge'];
-                                    $contact_number = $row['contact_number'];
-                                    $details = $row['details'];
-                                    $eventId = $row['id']; // Add event ID
-                                    $display = $row['is_display']; 
-
-                                    echo "<tr>";
-                                    echo "<td>" . $rowNumber . "</td>";
-                                    echo "<td>" . $eventName . "</td>";
-                                    echo "<td>" . $title . "</td>";
-                                    echo "<td>" . $date . "</td>";
-                                    echo "<td>" . $time_12_hour . "</td>";
-                                    echo "<td>" . $location . "</td>";
-                                    echo "<td>" . $incharge . "</td>";
-                                    echo "<td>" . $contact_number . "</td>";
-                                    
-                                    echo "<td>" . nl2br($details) . "</td>";
-                                    
-                                    // Check if the session role is equal to 1
-                                    if ($_SESSION['role'] == 1) {
-                                        // Display the checkbox for "Display?" column
-                                        echo "<td class='text-center'><input type='checkbox' class='display-checkbox' name='displayCheckbox[]' data-id='" . $eventId . "' value='1' " . ($display == 1 ? 'checked' : '') . "></td>";
-                                    }
-                                    // Edit icon to trigger modal
-                                    echo "<td class='table-action-column'><a href='#' class='edit-event' id='edit-event' data-toggle='modal' data-target='#EventEditModal' data-event-id='" . $eventId . "'><i class='fas fa-edit'></i></a>";
-                                            // Delete icon with JavaScript function to handle deletion
-                                            echo "<a href='#' onclick='deleteEvent(" . $eventId . ")'><i class='fas fa-trash'></i></a>
-                                        </td>";
-                                echo "</tr>";
-                                // Increment row number for the next iteration
-                            $rowNumber++;
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- JavaScript code to handle checkbox changes -->
-            <script>
-            $(document).ready(function() {
-                // Listen for changes in checkboxes with the class 'display-checkbox'
-                $('.display-checkbox').change(function() {
-                    // Get the value of the checkbox (1 if checked, 0 if unchecked)
-                    var isChecked = $(this).prop('checked') ? 1 : 0;
-                
-                    // Get the event ID from the data-id attribute of the checkbox
-                    var eventId = $(this).data('id');
-                    
-                    // Make an AJAX request to update the is_display column in the events table
-                    $.ajax({
-                        url: '../databases/queries/update_display.php',
-                        type: 'POST',
-                        data: {
-                            eventId: eventId,
-                            isChecked: isChecked
-                        },
-                        success: function(response) {
-                            // Handle success response
-                            console.log('Checkbox updated successfully');
-                        },
-                        error: function(xhr, status, error) {
-                            // Handle error response
-                            console.error('Error updating checkbox:', error);
-                        }
-                    });
-                });
-            });
-
-            function deleteEvent(eventId) {
-                    if (confirm("Are you sure you want to delete this event?")) {
-                        // Send AJAX request to delete the event
-                        var xhr = new XMLHttpRequest();
-                        xhr.open("POST", "../databases/queries/delete_event.php", true);
-                        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                        xhr.onreadystatechange = function () {
-                            if (xhr.readyState === 4 && xhr.status === 200) {
-                                // Reload the page after successful deletion
-                                location.reload();
-                            }
-                        };
-                        xhr.send("eventId=" + eventId);
-                    }
-                }
-
-                function cancel() {
-                    // Redirect back to index.php
-                    window.location.href = "../views/sched.php";
-                }
-
-               
-            </script>
-        </div>
-    </div>
-</div>
 
 
 <div id="sched_event">
@@ -2107,7 +1812,9 @@ echo '</div>';
 
     
 
+<div id="divSuguan">
 
+</div>
     
 </div>
 

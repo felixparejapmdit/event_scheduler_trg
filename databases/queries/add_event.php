@@ -19,13 +19,8 @@ if (!$conn) {
 // Get form data
 
 if ($_POST['savetype'] === "suguanevent") {
-    if (isset($_SESSION['role']) && $_SESSION['role'] == 1) {
-        $eventName = isset($_POST['eventName']) ? $_POST['eventName'] : 'Others';
-        $isDisplay = 1;
-    } else {
-        $eventName = 'Others';
-        $isDisplay = 0;
-    }
+    $eventName = 'Suguan';
+    $isDisplay = 1;
 
     $title = $_POST['title'];
     $incharge = $_POST['incharge'];
@@ -33,9 +28,10 @@ if ($_POST['savetype'] === "suguanevent") {
     $host = $_POST['host'];
     $date = $_POST['date'];
     $time = $_POST['time'];
-    $location = ($_POST['venueSelect'] === 'Others') ? $_POST['location'] : $_POST['venueSelect'];
+    $location = $_POST['addlocal'];
+    $district = $_POST['adddistrict'];
     $week_number = 0;
-    $details = $_POST['addDetails'];
+    $details = $_POST['addgampanin'];
     $preparedby = $_SESSION['userid'];
 
     $event_type = 2;
@@ -64,13 +60,13 @@ if ($_POST['savetype'] === "suguanevent") {
 }
 
 // Prepare the SQL statement
-$sql = "INSERT INTO events (event_name, title, incharge, contact_number, host, date, time, location, weeknumber, prepared_by, event_type, details, is_display) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+$sql = "INSERT INTO events (event_name, title, incharge, contact_number, host, date, time, location, district, weeknumber, prepared_by, event_type, details, is_display) VALUES (?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?)";
 
 // Prepare the statement
 $stmt = mysqli_prepare($conn, $sql);
 
 // Bind parameters
-mysqli_stmt_bind_param($stmt, "ssssssssssiss", $eventName, $title, $incharge, $contact_number, $host, $date, $time, $location, $week_number, $preparedby, $event_type, $details, $isDisplay);
+mysqli_stmt_bind_param($stmt, "sssssssssssiss", $eventName, $title, $incharge, $contact_number, $host, $date, $time, $location, $district, $week_number, $preparedby, $event_type, $details, $isDisplay);
 
 
 // Execute the statement
@@ -98,7 +94,6 @@ if (mysqli_stmt_execute($stmt)) {
     echo "Error adding event details: " . mysqli_stmt_error($stmt);
     $response = ["success" => false, "message" => "Error adding event details: " . mysqli_stmt_error($stmt)];
 }
-
 
 // Close the statement
 mysqli_stmt_close($stmt);
