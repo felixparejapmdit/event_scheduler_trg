@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 21, 2024 at 06:19 AM
+-- Generation Time: May 22, 2024 at 05:55 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -88,12 +88,14 @@ INSERT INTO `events` (`id`, `event_name`, `title`, `incharge`, `contact_number`,
 (10, 'Others', 'PAMAMAHAYAG ', 'Medel Salise Jr.', '@MedelSalise', '', '2024-06-03', '20:00:00', NULL, NULL, 'Novaliches, QC', '', NULL, NULL, 0, '1', NULL, 1, '', 1),
 (11, '7', 'Panata at Pulong', 'Ka RTG', '@rtg', '', '2024-05-17', '07:00:00', NULL, NULL, 'TRG OFFICE', '', NULL, NULL, 0, '1', NULL, 1, 'All Ministro at Mwa', 1),
 (12, 'Others', 'Paalala po!!!', 'Ka RTG', 'https://t.me/rondg314159', '', '2024-05-17', '07:00:00', NULL, NULL, 'TRG OFFICE', '', NULL, NULL, 0, '1', NULL, 1, '1.Huwag po natin malimutan Lumagda sa Weekends Suguan at Weekly Visitation po\r\n\r\n2.Tiyakin po natin nakapag la log in-out tayo sa logbook pag ginagamit natin ang mga Sasakyan/Ibalik ang mga Susi sa lalagyan at sa naka assign na parking po\r\n                                                                ', 1),
-(13, '1', 'Advanced Happy Birthday po!!!', 'Jester Niko NIcolas', 'https://t.me/jndnicolas', '', '2024-05-21', '12:00:00', NULL, NULL, '', '', NULL, NULL, 0, '1', NULL, 1, 'May 23, 2024', 1),
+(13, '1', 'Advanced Happy Birthday po!!!', 'Jester Niko NIcolas', 'https://t.me/jndnicolas', '', '2024-05-23', '12:00:00', NULL, NULL, '', '', NULL, NULL, 0, '1', NULL, 1, 'May 23, 2024', 1),
 (14, 'Others', 'Reminders', 'Ka Ron de Guzman', '@rondg314159', '', '2024-05-20', '07:00:00', NULL, NULL, 'TRG Office', '', NULL, NULL, 0, NULL, NULL, 1, 'Weekly Meeting (all Mtro/Mwa) @01:30PM', 0),
 (15, '7', 'Weekly Meeting', 'Ka Ron de Guzman', '@rondg314159', '', '2024-05-20', '13:30:00', NULL, NULL, '1', '', NULL, NULL, 0, '1', NULL, 1, 'All Mtro @ Mwa', 1),
 (24, 'Others', 'Please Read!!!', 'HD', '@trg_hdAd', '', '2024-05-22', '07:00:00', NULL, NULL, 'TRG OFFICE', '', NULL, NULL, 0, '1', NULL, 1, '1. Paalala po mag log in/out po tayo pag ginagamit po natin ang ating mga Service Vehicles.\r\n2.Ibalik po natin o Iwan po natin ang mga Susi ng sasakyan..\r\n3. Ilagay po sa Tamang Parking.\r\n                                                Salamat po...', 1),
 (25, 'Suguan', 'Felix Pareja', '', '', '', '2024-05-22', '19:30:00', NULL, NULL, 'Deparo', 'Caloocan North', NULL, NULL, 0, '1', NULL, 2, '3', 1),
-(27, 'Suguan', 'Kim Amaro', '', '', NULL, '2024-05-23', '19:00:00', NULL, NULL, 'Tandang Sora', 'Central', NULL, NULL, 0, '1', NULL, 2, '4', 1);
+(27, 'Suguan', 'Kim Amaro', '', '', NULL, '2024-05-23', '19:45:00', NULL, NULL, 'Centerville Extension', 'Central', NULL, NULL, 0, '1', NULL, 2, '3', 1),
+(28, 'Suguan', 'Kim Amaro', NULL, NULL, NULL, '2024-05-26', '06:00:00', NULL, NULL, 'Bagbag Extension', 'Central', NULL, NULL, 0, '1', NULL, 2, '3', 1),
+(29, 'Suguan', 'Felix Pareja', NULL, NULL, NULL, '2024-05-26', '10:00:00', NULL, NULL, 'Maligaya', 'Caloocan North', NULL, NULL, 0, '1', NULL, 2, '4', 1);
 
 -- --------------------------------------------------------
 
@@ -244,7 +246,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `location`
