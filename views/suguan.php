@@ -426,7 +426,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             <input type="hidden" id="current_url" name="current_url" value="suguan.php">
 
                                 <div class="form-group">
-                                    <label for="title">Title:</label>
+                                    <label for="title">Name:</label>
                                     <input type="text" id="title" name="title" class="form-control" required>
                                 </div>
 
@@ -495,7 +495,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <input type="hidden" id="editEventId" name="editEventId">
                     
                         <div class="form-group">
-                            <label for="editTitle">Title:</label>
+                            <label for="editTitle">Name:</label>
                             <input type="text" id="editTitle" name="editTitle" class="form-control" required>
                         </div>
                         <div class="form-group">
