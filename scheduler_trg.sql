@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 24, 2024 at 11:26 AM
+-- Generation Time: May 30, 2024 at 10:05 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -84,8 +84,8 @@ INSERT INTO `events` (`id`, `event_name`, `title`, `incharge`, `contact_number`,
 (3, '4', 'Pamamahagi ng Pasugo at Polyeto', 'Medel Salise Jr', '@MedelSalise01', '', '2024-06-02', '17:00:00', NULL, NULL, 'Lokal ng NOVALICHES, QC', '', NULL, NULL, 0, '1', NULL, 1, '', 1),
 (7, '1', 'BIRTHDAY CELEBRANT (TODAY)', 'Alvin David', 'https://t.me/alvinkyle', '', '2024-05-15', '07:00:00', NULL, NULL, '', '', NULL, NULL, 0, '1', NULL, 1, 'Belated Happy Birthday po!!!', 1),
 (8, '4', 'HERITAGE TOUR', 'Gloverick Parungao', '@Gloverick', '', '2024-05-25', '07:00:00', NULL, NULL, 'MUSEUM, PUNTA STA ANA, TIPAS, PHIL ARENA', '', NULL, NULL, 0, '1', NULL, 1, '', 1),
-(9, '4', 'Batarisang Paglilinis', 'Ka RTG', '@rondg314159', '', '2024-05-29', '08:00:00', NULL, NULL, 'TRG OFFICE', '', NULL, NULL, 0, '1', NULL, 1, '', 1),
-(10, 'Others', 'PAMAMAHAYAG ', 'Medel Salise Jr.', '@MedelSalise', '', '2024-06-03', '20:00:00', NULL, NULL, 'Novaliches, QC', '', NULL, NULL, 0, '1', NULL, 1, '', 1),
+(9, '4', 'Batarisang Paglilinis', 'Ka RTG', '@rondg314159', '', '2024-05-30', '08:00:00', NULL, NULL, 'TRG OFFICE', '', NULL, NULL, 0, '1', NULL, 1, '', 1),
+(10, '4', 'PAMAMAHAYAG ', 'Medel Salise Jr.', '@MedelSalise', '', '2024-06-03', '20:00:00', NULL, NULL, 'Novaliches, QC', '', NULL, NULL, 0, '1', NULL, 1, '', 1),
 (11, '7', 'Panata at Pulong', 'Ka RTG', '@rtg', '', '2024-05-17', '07:00:00', NULL, NULL, 'TRG OFFICE', '', NULL, NULL, 0, '1', NULL, 1, 'All Ministro at Mwa', 1),
 (12, 'Others', 'Paalala po!!!', 'Ka RTG', 'https://t.me/rondg314159', '', '2024-05-17', '07:00:00', NULL, NULL, 'TRG OFFICE', '', NULL, NULL, 0, '1', NULL, 1, '1.Huwag po natin malimutan Lumagda sa Weekends Suguan at Weekly Visitation po\r\n\r\n2.Tiyakin po natin nakapag la log in-out tayo sa logbook pag ginagamit natin ang mga Sasakyan/Ibalik ang mga Susi sa lalagyan at sa naka assign na parking po\r\n                                                                ', 1),
 (13, '1', 'Advanced Happy Birthday po!!!', 'Jester Niko NIcolas', 'https://t.me/jndnicolas', '', '2024-05-23', '12:00:00', NULL, NULL, '', '', NULL, NULL, 0, '1', NULL, 1, 'May 23, 2024', 1),
@@ -246,7 +246,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `location`
