@@ -1354,7 +1354,6 @@ echo '</div>';
 
         // Check if the current URL contains 'userid'
         if (strpos($current_url, 'sectionid') !== false) {
-
             $today_query = "SELECT e.date, e.id,
             (SELECT SUM(cnt) FROM (SELECT COUNT(*) AS cnt 
             FROM events e
@@ -1369,13 +1368,14 @@ echo '</div>';
 
         }
         else{
-            $today_query = "SELECT date, COUNT(*) AS event_count, e.id,
-            (SELECT SUM(cnt) FROM (SELECT COUNT(*) AS cnt FROM events 
+            $today_query = "SELECT date, COUNT(e.id) AS event_count,
+            (SELECT SUM(cnt) FROM (SELECT COUNT(*) AS cnt FROM events e
             WHERE is_display = 1 AND event_type = 1 AND date > '$day_after_tomorrow' GROUP BY date) AS subquery) AS total_event_count
             FROM events e
             INNER JOIN user u ON u.id = e.prepared_by 
             WHERE is_display = 1 AND event_type = 1 AND date > '$day_after_tomorrow' AND e.prepared_by NOT IN(14, 40) 
-            GROUP BY date ORDER BY date ASC";
+            GROUP BY date 
+            ORDER BY date ASC";
         }
         } 
         else {
@@ -1388,7 +1388,17 @@ echo '</div>';
         }
 
         $today_result = mysqli_query($conn, $today_query);
-         // echo $today_query;
+
+///// Check for errors
+if (!$today_result) {
+    echo "Error: " . mysqli_error($conn);
+} else {
+    // Get the row count
+    $row_count = mysqli_num_rows($today_result);
+    //echo "Number of rows: " . $row_count;
+}
+
+         //echo $today_query;
         // Get the row count
         $row_count = mysqli_num_rows($today_result);
         
