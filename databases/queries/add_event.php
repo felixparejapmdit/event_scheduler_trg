@@ -50,8 +50,17 @@ if ($_POST['savetype'] === "suguanevent") {
     $host = $_POST['host'];
     $date = $_POST['date'];
     $time = $_POST['time'];
-    $location = ($_POST['venueSelect'] === 'Others') ? $_POST['location'] : $_POST['venueSelect'];
-    $week_number = 0;
+    
+    // Check if venueSelect and location are set in the POST request
+    $venueSelect = isset($_POST['venueSelect']) ? $_POST['venueSelect'] : '';
+    $location = ($venueSelect === 'Others') ? (isset($_POST['location']) ? $_POST['location'] : '') : $venueSelect;
+
+    // If venueSelect is empty, handle it accordingly
+    if (empty($venueSelect)) {
+        // You can set a default value or handle the error here
+        $location = 'Default Location'; // Example default value
+    }
+        $week_number = 0;
     $details = $_POST['addDetails'];
     $preparedby = $_SESSION['userid'];
 

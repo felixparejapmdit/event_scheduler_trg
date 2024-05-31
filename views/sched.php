@@ -1368,7 +1368,7 @@ echo '</div>';
 
         }
         else{
-            $today_query = "SELECT date, COUNT(e.id) AS event_count,
+            $today_query = "SELECT date, COUNT(e.id) AS event_count, e.id,
             (SELECT SUM(cnt) FROM (SELECT COUNT(*) AS cnt FROM events e
             WHERE is_display = 1 AND event_type = 1 AND date > '$day_after_tomorrow' GROUP BY date) AS subquery) AS total_event_count
             FROM events e
